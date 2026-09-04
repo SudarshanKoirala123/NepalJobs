@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Post Job - NepalJobs</title>
+
+
+    <!-- Font Awesome -->
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+
+    <!-- Employer CSS -->
+
+    <link rel="stylesheet" href="admin.css">
+
+</head>
+
+
+<body>
+
+
+<!-- ========================================
+     SIDEBAR
+======================================== -->
+
+<aside class="sidebar">
+
+
+    <div class="logo">
+
+        <h2>NepalJobs</h2>
+
+    </div>
+
+
+    <ul class="menu">
+
+
+        <!-- Dashboard -->
+
+        <li>
+
+            <a href="dashboard.html">
+
+                <i class="fas fa-home"></i>
+
+                <span>Dashboard</span>
+
+            </a>
+
+        </li>
+
+
+        <!-- Post Job -->
+
+        <li class="active">
+
+            <a href="post-job.html">
+
+                <i class="fas fa-plus-circle"></i>
+
+                <span>Post Job</span>
+
+            </a>
+
+        </li>
+
+
+        <!-- Manage Jobs -->
+
+        <li>
+
+            <a href="manage-jobs.html">
+
+                <i class="fas fa-briefcase"></i>
+
+                <span>Manage Jobs</span>
+
+            </a>
+
+        </li>
+
+
+        <!-- Applicants -->
+
+        <li>
+
+            <a href="applicants.html">
+
+                <i class="fas fa-users"></i>
+
+                <span>Applicants</span>
+
+            </a>
+
+        </li>
+
+
+        <!-- Settings -->
+
+        <li>
+
+            <a href="settings.html">
+
+                <i class="fas fa-cog"></i>
+
+                <span>Settings</span>
+
+            </a>
+
+        </li>
+
+
+        <!-- Logout -->
+
+        <li>
+
+            <a href="../login.html">
+
+                <i class="fas fa-right-from-bracket"></i>
+
+                <span>Logout</span>
+
+            </a>
+
+        </li>
+
+
+    </ul>
+
+
+</aside>
+
+
+
+<!-- ========================================
+     MAIN CONTENT
+======================================== -->
+
+<main class="main-content">
+
+
+    <!-- TOPBAR -->
+
+    <header class="topbar">
+
+
+        <h1>Post New Job</h1>
+
+
+        <div class="profile">
+
+            <i class="fas fa-user-circle"></i>
+
+            <span>Welcome, Employer</span>
+
+        </div>
+
+
+    </header>
+
+
+
+    <!-- ====================================
+         POST JOB FORM
+    ===================================== -->
+
+    <div class="job-form">
+
+
+        <form id="postJobForm">
+
+
+            <!-- Job Title -->
+
+            <div class="form-group">
+
+                <label>Job Title</label>
+
+                <input
+                    type="text"
+                    id="jobTitle"
+                    placeholder="Enter job title"
+                    required
+                >
+
+            </div>
+
+
+
+            <!-- Company -->
+
+            <div class="form-group">
+
+                <label>Company Name</label>
+
+                <input
+                    type="text"
+                    id="companyName"
+                    placeholder="Company name"
+                    required
+                >
+
+            </div>
+
+
+
+            <!-- Location -->
+
+            <div class="form-group">
+
+                <label>Location</label>
+
+                <input
+                    type="text"
+                    id="jobLocation"
+                    placeholder="Kathmandu"
+                    required
+                >
+
+            </div>
+
+
+
+            <!-- Salary -->
+
+            <div class="form-group">
+
+                <label>Salary</label>
+
+                <input
+                    type="text"
+                    id="jobSalary"
+                    placeholder="Rs. 50,000"
+                >
+
+            </div>
+
+
+
+            <!-- Job Type -->
+
+            <div class="form-group">
+
+                <label>Job Type</label>
+
+
+                <select id="jobType" required>
+
+                    <option value="">
+                        Select Job Type
+                    </option>
+
+                    <option value="Full Time">
+                        Full Time
+                    </option>
+
+                    <option value="Part Time">
+                        Part Time
+                    </option>
+
+                    <option value="Internship">
+                        Internship
+                    </option>
+
+                    <option value="Remote">
+                        Remote
+                    </option>
+
+                </select>
+
+
+            </div>
+
+
+
+            <!-- Deadline -->
+
+            <div class="form-group">
+
+                <label>Application Deadline</label>
+
+                <input
+                    type="date"
+                    id="jobDeadline"
+                    required
+                >
+
+            </div>
+
+
+
+            <!-- Description -->
+
+            <div class="form-group">
+
+                <label>Job Description</label>
+
+
+                <textarea
+                    id="jobDescription"
+                    rows="6"
+                    placeholder="Write job description..."
+                    required
+                ></textarea>
+
+
+            </div>
+
+
+
+            <!-- Submit -->
+
+            <button
+                type="submit"
+                class="btn-submit"
+            >
+
+                <i class="fas fa-plus-circle"></i>
+
+                Post Job
+
+            </button>
+
+
+        </form>
+
+
+    </div>
+
+
+</main>
+
+
+
+<!-- ========================================
+     JAVASCRIPT
+======================================== -->
+
+<script src="post-job.js"></script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Manage Applications - NepalJobs</title>
+
+    <link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+
+    <div class="sidebar">
+
+        <h2>NepalJobs</h2>
+        <p>Admin Panel</p>
+
+        <a href="admin.html">Dashboard</a>
+        <a href="users.html">Manage Users</a>
+        <a href="employers.html">Manage Employers</a>
+        <a href="jobseekers.html">Manage Job Seekers</a>
+        <a href="manage-jobs.html">Manage Jobs</a>
+        <a href="applicants.html" class="active">Applications</a>
+        <a href="settings.html">Settings</a>
+
+        <a href="../index.html">Back to Website</a>
+
+    </div>
+
+
+    <div class="main-content">
+
+        <h1>Manage Applications</h1>
+
+        <p>View and manage job applications submitted by job seekers.</p>
+
+
+        <div class="table-section">
+
+            <h2>All Applications</h2>
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Applicant</th>
+                        <th>Email</th>
+                        <th>Job</th>
+                        <th>Company</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody id="applicationsTableBody">
+                    <!-- Applications will appear here -->
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <script src="applicants.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>NepalJobs - Find Your Dream Job</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+<!-- ================= NAVBAR ================= -->
+
+<header>
+
+    <nav class="navbar">
+
+
+        <div class="logo">
+            NepalJobs
+        </div>
+
+
+        <ul class="nav-links">
+
+            <li>
+                <a href="index.html">
+                    Home
+                </a>
+            </li>
+
+            <li>
+                <a href="#featured-jobs">
+                    Jobs
+                </a>
+            </li>
+
+            <li>
+                <a href="#companies">
+                    Companies
+                </a>
+            </li>
+
+            <li>
+                <a href="#about">
+                    About
+                </a>
+            </li>
+
+            <li>
+                <a href="#contact">
+                    Contact
+                </a>
+            </li>
+
+            <li>
+                <a href="login.html">
+                    Login
+                </a>
+            </li>
+
+            <li>
+                <a href="register.html">
+                    Register
+                </a>
+            </li>
+
+        </ul>
+
+
+        <div class="buttons">
+
+
+            <a href="login.html">
+
+                <button class="login-btn">
+                    Login
+                </button>
+
+            </a>
+
+
+            <a href="post-job.html">
+
+                <button class="post-btn">
+                    Post a Job
+                </button>
+
+            </a>
+
+
+            <a href="dashboard.html">
+
+                <button class="dashboard-btn">
+                    Dashboard
+                </button>
+
+            </a>
+
+
+            <a href="register.html">
+
+                <button class="signup-btn">
+                    Sign Up
+                </button>
+
+            </a>
+
+
+        </div>
+
+
+    </nav>
+
+</header>
+
+
+
+<!-- ================= HERO ================= -->
+
+<section class="hero">
+
+
+    <div class="hero-content">
+
+
+        <h1>
+            Find Your Dream Job in Nepal
+        </h1>
+
+
+        <p>
+            Search thousands of jobs from Nepal's top companies.
+            Build your career with NepalJobs.
+        </p>
+
+
+        <div class="search-box">
+
+
+            <input
+                id="search-title"
+                type="text"
+                placeholder="Job Title"
+            >
+
+
+            <input
+                id="search-company"
+                type="text"
+                placeholder="Company"
+            >
+
+
+            <input
+                id="search-location"
+                type="text"
+                placeholder="Location"
+            >
+
+
+            <button
+                id="search-btn"
+                type="button"
+            >
+                Search Jobs
+            </button>
+
+
+        </div>
+
+
+    </div>
+
+
+
+    <div class="hero-image">
+
+
+        <h2>💼</h2>
+
+
+        <p>
+            Career Starts Here
+        </p>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- ================= STATISTICS ================= -->
+
+<section class="stats">
+
+
+    <div class="stat-box">
+
+        <h2>10,000+</h2>
+
+        <p>Jobs</p>
+
+    </div>
+
+
+    <div class="stat-box">
+
+        <h2>500+</h2>
+
+        <p>Companies</p>
+
+    </div>
+
+
+    <div class="stat-box">
+
+        <h2>50,000+</h2>
+
+        <p>Job Seekers</p>
+
+    </div>
+
+
+    <div class="stat-box">
+
+        <h2>98%</h2>
+
+        <p>Success Rate</p>
+
+    </div>
+
+
+</section>
+
+
+
+<!-- ================= FEATURED JOBS ================= -->
+
+<section
+    class="featured-jobs"
+    id="featured-jobs"
+>
+
+
+    <h2>
+        Featured Jobs
+    </h2>
+
+
+    <div class="job-container">
+
+
+        <div class="job-card">
+
+
+            <h3>
+                Frontend Developer
+            </h3>
+
+
+            <p>
+                <strong>Company:</strong>
+                ABC Tech
+            </p>
+
+
+            <p>
+                <strong>Location:</strong>
+                Kathmandu
+            </p>
+
+
+            <button
+                class="apply-btn"
+                onclick="goToLogin()"
+            >
+                Apply Now
+            </button>
+
+
+        </div>
+
+
+
+        <div class="job-card">
+
+
+            <h3>
+                Backend Developer
+            </h3>
+
+
+            <p>
+                <strong>Company:</strong>
+                XYZ Solutions
+            </p>
+
+
+            <p>
+                <strong>Location:</strong>
+                Pokhara
+            </p>
+
+
+            <button
+                class="apply-btn"
+                onclick="goToLogin()"
+            >
+                Apply Now
+            </button>
+
+
+        </div>
+
+
+
+        <div class="job-card">
+
+
+            <h3>
+                UI/UX Designer
+            </h3>
+
+
+            <p>
+                <strong>Company:</strong>
+                Creative Studio
+            </p>
+
+
+            <p>
+                <strong>Location:</strong>
+                Lalitpur
+            </p>
+
+
+            <button
+                class="apply-btn"
+                onclick="goToLogin()"
+            >
+                Apply Now
+            </button>
+
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- ================= JOB CATEGORIES ================= -->
+
+<section class="categories">
+
+
+    <h2>
+        Browse Jobs by Category
+    </h2>
+
+
+    <div class="category-container">
+
+
+        <div class="category-card">
+
+            <div class="icon">💻</div>
+
+            <h3>
+                IT & Software
+            </h3>
+
+            <p>
+                120 Jobs Available
+            </p>
+
+        </div>
+
+
+        <div class="category-card">
+
+            <div class="icon">🏦</div>
+
+            <h3>
+                Banking
+            </h3>
+
+            <p>
+                45 Jobs Available
+            </p>
+
+        </div>
+
+
+        <div class="category-card">
+
+            <div class="icon">🏥</div>
+
+            <h3>
+                Healthcare
+            </h3>
+
+            <p>
+                78 Jobs Available
+            </p>
+
+        </div>
+
+
+        <div class="category-card">
+
+            <div class="icon">🎓</div>
+
+            <h3>
+                Education
+            </h3>
+
+            <p>
+                63 Jobs Available
+            </p>
+
+        </div>
+
+
+        <div class="category-card">
+
+            <div class="icon">📈</div>
+
+            <h3>
+                Marketing
+            </h3>
+
+            <p>
+                39 Jobs Available
+            </p>
+
+        </div>
+
+
+        <div class="category-card">
+
+            <div class="icon">🏨</div>
+
+            <h3>
+                Hospitality
+            </h3>
+
+            <p>
+                51 Jobs Available
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- ================= TOP COMPANIES ================= -->
+
+<section
+    class="companies"
+    id="companies"
+>
+
+
+    <h2>
+        Top Hiring Companies
+    </h2>
+
+
+    <div class="company-container">
+
+
+        <div class="company-card">
+
+            <h3>
+                eSewa
+            </h3>
+
+            <p>
+                FinTech Company
+            </p>
+
+        </div>
+
+
+        <div class="company-card">
+
+            <h3>
+                Khalti
+            </h3>
+
+            <p>
+                Digital Payment
+            </p>
+
+        </div>
+
+
+        <div class="company-card">
+
+            <h3>
+                CloudFactory
+            </h3>
+
+            <p>
+                Technology
+            </p>
+
+        </div>
+
+
+        <div class="company-card">
+
+            <h3>
+                Daraz Nepal
+            </h3>
+
+            <p>
+                E-Commerce
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- ================= ABOUT ================= -->
+
+<section id="about">
+
+
+    <h2>
+        About NepalJobs
+    </h2>
+
+
+    <p>
+        NepalJobs helps job seekers connect with employers
+        and discover career opportunities across Nepal.
+    </p>
+
+
+</section>
+
+
+
+<!-- ================= CONTACT ================= -->
+
+<section id="contact">
+
+
+    <h2>
+        Contact NepalJobs
+    </h2>
+
+
+    <p>
+        Have questions? Contact the NepalJobs team.
+    </p>
+
+
+</section>
+
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="footer">
+
+
+    <h2>
+        NepalJobs
+    </h2>
+
+
+    <p>
+        Helping Nepalese job seekers connect with top employers.
+    </p>
+
+
+    <p>
+        © 2026 NepalJobs. All Rights Reserved.
+    </p>
+
+
+</footer>
+
+
+
+<!-- ================= SCRIPT ================= -->
+
+<script>
+
+
+// ========================================
+// APPLY BUTTON
+// ========================================
+
+function goToLogin() {
+
+    const loggedInUser =
+        JSON.parse(
+            localStorage.getItem("loggedInUser")
+        );
+
+
+    if (loggedInUser) {
+
+        window.location.href =
+            "jobseeker/jobs.html";
+
+    } else {
+
+        alert(
+            "Please login first to apply for a job."
+        );
+
+
+        window.location.href =
+            "login.html";
+
+    }
+
+}
+
+
+
+// ========================================
+// SEARCH JOBS
+// ========================================
+
+const searchButton =
+    document.getElementById("search-btn");
+
+
+searchButton.addEventListener(
+    "click",
+    function() {
+
+
+        const title =
+            document
+                .getElementById("search-title")
+                .value
+                .trim();
+
+
+        const company =
+            document
+                .getElementById("search-company")
+                .value
+                .trim();
+
+
+        const location =
+            document
+                .getElementById("search-location")
+                .value
+                .trim();
+
+
+        localStorage.setItem(
+            "homeJobSearch",
+            JSON.stringify({
+
+                title: title,
+
+                company: company,
+
+                location: location
+
+            })
+        );
+
+
+        window.location.href =
+    "seeker/jobs.html";
+    }
+);
+
+
+</script>
+
+
+</body>
+
+</html>

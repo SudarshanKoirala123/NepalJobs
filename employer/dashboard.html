@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Employer Dashboard - NepalJobs</title>
+
+    <link rel="stylesheet" href="employer.css">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+
+<body>
+
+
+<!-- ========================================
+     SIDEBAR
+     ======================================== -->
+
+<div class="sidebar">
+
+    <div class="logo">
+        <h2>NepalJobs</h2>
+    </div>
+
+
+    <ul class="menu">
+
+        <li class="active">
+
+            <a href="dashboard.html">
+
+                <i class="fas fa-home"></i>
+
+                <span>Dashboard</span>
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="post-job.html">
+
+                <i class="fas fa-plus-circle"></i>
+
+                <span>Post a Job</span>
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="manage-jobs.html">
+
+                <i class="fas fa-briefcase"></i>
+
+                <span>Manage Jobs</span>
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="applicants.html">
+
+                <i class="fas fa-users"></i>
+
+                <span>Applicants</span>
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="profile.html">
+
+                <i class="fas fa-user"></i>
+
+                <span>My Profile</span>
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="settings.html">
+
+                <i class="fas fa-cog"></i>
+
+                <span>Settings</span>
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="../login.html"
+               onclick="logoutUser(event)">
+
+                <i class="fas fa-sign-out-alt"></i>
+
+                <span>Logout</span>
+
+            </a>
+
+        </li>
+
+    </ul>
+
+</div>
+
+
+
+<!-- ========================================
+     MAIN CONTENT
+     ======================================== -->
+
+<div class="main-content">
+
+
+    <!-- TOPBAR -->
+
+    <div class="topbar">
+
+        <h1>
+
+            Welcome,
+            <span id="userName">
+                Employer
+            </span>
+
+        </h1>
+
+
+        <div class="profile">
+
+            <i class="fas fa-user-circle"></i>
+
+            <span id="profileName">
+                Employer
+            </span>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ========================================
+         STATISTICS
+         ======================================== -->
+
+    <section class="cards">
+
+
+        <div class="card">
+
+            <i class="fas fa-briefcase"></i>
+
+            <h2 id="totalJobs">
+                0
+            </h2>
+
+            <p>
+                Total Jobs Posted
+            </p>
+
+        </div>
+
+
+
+        <div class="card">
+
+            <i class="fas fa-check-circle"></i>
+
+            <h2 id="activeJobs">
+                0
+            </h2>
+
+            <p>
+                Active Jobs
+            </p>
+
+        </div>
+
+
+
+        <div class="card">
+
+            <i class="fas fa-users"></i>
+
+            <h2 id="totalApplicants">
+                0
+            </h2>
+
+            <p>
+                Total Applicants
+            </p>
+
+        </div>
+
+
+
+        <div class="card">
+
+            <i class="fas fa-user-check"></i>
+
+            <h2 id="selectedApplicants">
+                0
+            </h2>
+
+            <p>
+                Selected Applicants
+            </p>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- ========================================
+         MY JOBS
+         ======================================== -->
+
+    <section class="table-section">
+
+
+        <h2>
+            My Recent Jobs
+        </h2>
+
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Job Title
+                    </th>
+
+                    <th>
+                        Company
+                    </th>
+
+                    <th>
+                        Location
+                    </th>
+
+                    <th>
+                        Status
+                    </th>
+
+                    <th>
+                        Action
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody id="jobsTableBody">
+
+                <!-- Jobs will appear here -->
+
+            </tbody>
+
+        </table>
+
+
+    </section>
+
+
+</div>
+
+
+
+<!-- ========================================
+     JAVASCRIPT
+     ======================================== -->
+
+<script>
+
+
+// ========================================
+// GET LOGGED-IN USER
+// ========================================
+
+const loggedInUser =
+    JSON.parse(
+        localStorage.getItem("loggedInUser")
+    );
+
+
+// ========================================
+// CHECK LOGIN
+// ========================================
+
+if (!loggedInUser) {
+
+    window.location.href =
+        "../login.html";
+
+}
+
+
+// ========================================
+// CHECK EMPLOYER ROLE
+// ========================================
+
+if (
+    loggedInUser &&
+    loggedInUser.role !== "employer"
+) {
+
+    alert(
+        "Access denied. Employer account required."
+    );
+
+    window.location.href =
+        "../login.html";
+
+}
+
+
+// ========================================
+// DISPLAY USER NAME
+// ========================================
+
+if (loggedInUser) {
+
+    document.getElementById("userName").textContent =
+        loggedInUser.name || "Employer";
+
+    document.getElementById("profileName").textContent =
+        loggedInUser.name || "Employer";
+
+}
+
+
+// ========================================
+// GET ALL JOBS
+// ========================================
+
+const allJobs =
+    JSON.parse(
+        localStorage.getItem("nepalJobs")
+    ) || [];
+
+
+// ========================================
+// GET ALL APPLICATIONS
+// ========================================
+
+const allApplications =
+    JSON.parse(
+        localStorage.getItem("jobApplications")
+    ) || [];
+
+
+// ========================================
+// GET EMPLOYER JOBS
+// ========================================
+
+const employerEmail =
+    loggedInUser.email.toLowerCase();
+
+
+const employerJobs =
+    allJobs.filter(function(job) {
+
+        return (
+            job.employerEmail &&
+            job.employerEmail.toLowerCase() ===
+            employerEmail
+        );
+
+    });
+
+
+// ========================================
+// TOTAL JOBS
+// ========================================
+
+document.getElementById(
+    "totalJobs"
+).textContent =
+    employerJobs.length;
+
+
+// ========================================
+// ACTIVE JOBS
+// ========================================
+
+const activeJobs =
+    employerJobs.filter(function(job) {
+
+        return (
+            (job.status || "active")
+                .toLowerCase() ===
+            "active"
+        );
+
+    });
+
+
+document.getElementById(
+    "activeJobs"
+).textContent =
+    activeJobs.length;
+
+
+// ========================================
+// GET EMPLOYER JOB TITLES
+// ========================================
+
+const employerJobTitles =
+    employerJobs.map(function(job) {
+
+        return (
+            job.title || ""
+        ).toLowerCase();
+
+    });
+
+
+// ========================================
+// EMPLOYER APPLICATIONS
+// ========================================
+
+const employerApplications =
+    allApplications.filter(function(application) {
+
+        const jobTitle =
+            (
+                application.jobTitle ||
+                application.title ||
+                ""
+            ).toLowerCase();
+
+        return employerJobTitles.includes(
+            jobTitle
+        );
+
+    });
+
+
+// ========================================
+// TOTAL APPLICANTS
+// ========================================
+
+document.getElementById(
+    "totalApplicants"
+).textContent =
+    employerApplications.length;
+
+
+// ========================================
+// SELECTED APPLICANTS
+// ========================================
+
+const selectedApplicants =
+    employerApplications.filter(
+        function(application) {
+
+            return (
+                (application.status || "")
+                    .toLowerCase() ===
+                "accepted"
+            );
+
+        }
+    );
+
+
+document.getElementById(
+    "selectedApplicants"
+).textContent =
+    selectedApplicants.length;
+
+
+// ========================================
+// JOB TABLE
+// ========================================
+
+const jobsTableBody =
+    document.getElementById(
+        "jobsTableBody"
+    );
+
+
+// ========================================
+// DISPLAY JOBS
+// ========================================
+
+function displayJobs() {
+
+
+    jobsTableBody.innerHTML = "";
+
+
+    if (employerJobs.length === 0) {
+
+        jobsTableBody.innerHTML = `
+
+            <tr>
+
+                <td colspan="5"
+                    style="text-align:center;">
+
+                    You have not posted any jobs yet.
+
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+
+    // Show latest 5 jobs
+
+    employerJobs
+        .slice()
+        .reverse()
+        .slice(0, 5)
+        .forEach(function(job) {
+
+
+            const row =
+                document.createElement("tr");
+
+
+            row.innerHTML = `
+
+                <td>
+                    ${job.title || "Job Title"}
+                </td>
+
+                <td>
+                    ${job.company || "Company"}
+                </td>
+
+                <td>
+                    ${job.location || "Location"}
+                </td>
+
+                <td>
+                    ${job.status || "active"}
+                </td>
+
+                <td>
+
+                    <a href="manage-jobs.html">
+
+                        <button class="edit-btn">
+
+                            Manage
+
+                        </button>
+
+                    </a>
+
+                </td>
+
+            `;
+
+
+            jobsTableBody.appendChild(row);
+
+        });
+
+}
+
+
+// ========================================
+// LOGOUT
+// ========================================
+
+function logoutUser(event) {
+
+    event.preventDefault();
+
+
+    localStorage.removeItem(
+        "loggedInUser"
+    );
+
+
+    window.location.href =
+        "../login.html";
+
+}
+
+
+// ========================================
+// LOAD JOBS
+// ========================================
+
+displayJobs();
+
+
+</script>
+
+
+</body>
+
+</html>

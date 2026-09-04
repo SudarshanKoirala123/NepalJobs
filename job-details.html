@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Job Details - NepalJobs</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar">
+
+
+    <div class="logo">
+
+        <h2>NepalJobs</h2>
+
+    </div>
+
+
+    <ul class="nav-links">
+
+        <li>
+            <a href="index.html">
+                Home
+            </a>
+        </li>
+
+        <li>
+            <a href="jobseeker/jobs.html">
+                Jobs
+            </a>
+        </li>
+
+        <li>
+            <a href="index.html#companies">
+                Companies
+            </a>
+        </li>
+
+        <li>
+            <a href="index.html#contact">
+                Contact
+            </a>
+        </li>
+
+    </ul>
+
+
+</nav>
+
+
+
+<!-- ================= JOB DETAILS ================= -->
+
+<section class="job-details">
+
+
+    <h1>
+        Frontend Web Developer
+    </h1>
+
+
+    <p>
+        <strong>Company:</strong>
+        ABC Tech Pvt. Ltd.
+    </p>
+
+
+    <p>
+        <strong>Location:</strong>
+        Kathmandu
+    </p>
+
+
+    <p>
+        <strong>Salary:</strong>
+        Rs. 45,000 - 60,000
+    </p>
+
+
+    <p>
+        <strong>Job Type:</strong>
+        Full Time
+    </p>
+
+
+
+    <h3>
+        Description
+    </h3>
+
+
+    <p>
+
+        ABC Tech is looking for a passionate
+        Frontend Web Developer who has knowledge
+        of HTML, CSS and JavaScript.
+
+    </p>
+
+
+
+    <h3>
+        Requirements
+    </h3>
+
+
+    <ul>
+
+        <li>HTML</li>
+
+        <li>CSS</li>
+
+        <li>JavaScript</li>
+
+        <li>Responsive Design</li>
+
+    </ul>
+
+
+
+    <button
+        id="applyBtn"
+        class="apply-btn"
+        type="button"
+    >
+
+        Apply Now
+
+    </button>
+
+
+</section>
+
+
+
+<!-- ================= SCRIPT ================= -->
+
+<script>
+
+
+document
+    .getElementById("applyBtn")
+    .addEventListener("click", function() {
+
+
+        // Get logged-in user
+
+        const loggedInUser =
+            JSON.parse(
+                localStorage.getItem("loggedInUser")
+            );
+
+
+        // ========================================
+        // CHECK LOGIN
+        // ========================================
+
+        if (!loggedInUser) {
+
+            alert(
+                "Please login first to apply for this job."
+            );
+
+
+            window.location.href =
+                "login.html";
+
+
+            return;
+
+        }
+
+
+
+        // ========================================
+        // CREATE SELECTED JOB
+        // ========================================
+
+        const selectedJob = {
+
+            title:
+                "Frontend Web Developer",
+
+            company:
+                "ABC Tech Pvt. Ltd.",
+
+            location:
+                "Kathmandu",
+
+            salary:
+                "Rs. 45,000 - 60,000",
+
+            jobType:
+                "Full Time"
+
+        };
+
+
+
+        // Save selected job
+
+        localStorage.setItem(
+            "selectedJob",
+            JSON.stringify(selectedJob)
+        );
+
+
+
+        // ========================================
+        // GO TO APPLICATION PAGE
+        // ========================================
+
+        window.location.href =
+            "apply.html";
+
+    });
+
+
+</script>
+
+
+</body>
+
+</html>

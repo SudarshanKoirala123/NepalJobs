@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>My Applications - NepalJobs</title>
+
+    <link rel="stylesheet" href="../style.css">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+
+<body>
+
+
+<!-- ================= SIDEBAR ================= -->
+
+<div class="sidebar">
+
+
+    <div class="logo">
+
+        <h2>NepalJobs</h2>
+
+    </div>
+
+
+    <ul class="menu">
+
+
+        <li>
+
+            <a href="dashboard.html">
+
+                <i class="fas fa-home"></i>
+
+                <span>Dashboard</span>
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="jobs.html">
+
+                <i class="fas fa-search"></i>
+
+                <span>Find Jobs</span>
+
+            </a>
+
+        </li>
+
+
+        <li class="active">
+
+            <a href="application.html">
+
+                <i class="fas fa-file"></i>
+
+                <span>My Applications</span>
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="profile.html">
+
+                <i class="fas fa-user"></i>
+
+                <span>My Profile</span>
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="settings.html">
+
+                <i class="fas fa-cog"></i>
+
+                <span>Settings</span>
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="../login.html">
+
+                <i class="fas fa-sign-out-alt"></i>
+
+                <span>Logout</span>
+
+            </a>
+
+        </li>
+
+
+    </ul>
+
+</div>
+
+
+
+<!-- ================= MAIN CONTENT ================= -->
+
+<div class="main-content">
+
+
+    <div class="topbar">
+
+        <h1>
+            My Applications
+        </h1>
+
+    </div>
+
+
+
+    <div class="table-section">
+
+
+        <h2>
+            Applied Jobs
+        </h2>
+
+
+        <table>
+
+
+            <thead>
+
+                <tr>
+
+                    <th>Job Title</th>
+
+                    <th>Company</th>
+
+                    <th>Location</th>
+
+                    <th>Applied Date</th>
+
+                    <th>Status</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody id="applicationsTable">
+
+                <!-- Applications loaded by JavaScript -->
+
+            </tbody>
+
+
+        </table>
+
+
+    </div>
+
+
+</div>
+
+
+
+<script>
+
+
+// ========================================
+// GET LOGGED-IN USER
+// ========================================
+
+const loggedInUser =
+    JSON.parse(
+        localStorage.getItem("loggedInUser")
+    );
+
+
+// ========================================
+// GET APPLICATIONS
+// ========================================
+
+const applications =
+    JSON.parse(
+        localStorage.getItem("jobApplications")
+    ) || [];
+
+
+
+const applicationsTable =
+    document.getElementById(
+        "applicationsTable"
+    );
+
+
+
+if (!loggedInUser) {
+
+
+    applicationsTable.innerHTML = `
+
+        <tr>
+
+            <td colspan="5"
+                style="text-align:center;">
+
+                Please login to view your applications.
+
+            </td>
+
+        </tr>
+
+    `;
+
+
+} else {
+
+
+    // ========================================
+    // ONLY SHOW CURRENT USER'S APPLICATIONS
+    // ========================================
+
+    const myApplications =
+        applications.filter(function(application) {
+
+            return (
+                application.applicantEmail &&
+                application.applicantEmail.toLowerCase() ===
+                loggedInUser.email.toLowerCase()
+            );
+
+        });
+
+
+
+    if (myApplications.length === 0) {
+
+
+        applicationsTable.innerHTML = `
+
+            <tr>
+
+                <td colspan="5"
+                    style="text-align:center;">
+
+                    You have not applied for any jobs yet.
+
+                </td>
+
+            </tr>
+
+        `;
+
+
+    } else {
+
+
+        myApplications.forEach(function(application) {
+
+
+            const row =
+                document.createElement("tr");
+
+
+            let status =
+                application.status || "Pending";
+
+
+            status =
+                status.charAt(0).toUpperCase() +
+                status.slice(1).toLowerCase();
+
+
+
+            row.innerHTML = `
+
+                <td>
+                    ${application.jobTitle || "Job"}
+                </td>
+
+                <td>
+                    ${application.company || "Company"}
+                </td>
+
+                <td>
+                    ${application.location || "Location"}
+                </td>
+
+                <td>
+                    ${application.appliedDate || "N/A"}
+                </td>
+
+                <td>
+
+                    <span class="status ${status.toLowerCase()}">
+
+                        ${status}
+
+                    </span>
+
+                </td>
+
+            `;
+
+
+            applicationsTable.appendChild(row);
+
+
+        });
+
+    }
+
+}
+
+
+</script>
+
+
+</body>
+
+</html>

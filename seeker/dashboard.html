@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Job Seeker Dashboard - NepalJobs</title>
+
+    <link rel="stylesheet" href="seeker.css">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+
+<body>
+
+
+<!-- ========================================
+     SIDEBAR
+     ======================================== -->
+
+<div class="sidebar">
+
+    <div class="logo">
+        <h2>NepalJobs</h2>
+    </div>
+
+
+    <ul class="menu">
+
+        <li class="active">
+
+            <a href="dashboard.html">
+
+                <i class="fas fa-home"></i>
+
+                <span>Dashboard</span>
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="jobs.html">
+
+                <i class="fas fa-search"></i>
+
+                <span>Find Jobs</span>
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="application.html">
+
+                <i class="fas fa-file-alt"></i>
+
+                <span>My Applications</span>
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="profile.html">
+
+                <i class="fas fa-user"></i>
+
+                <span>My Profile</span>
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="settings.html">
+
+                <i class="fas fa-cog"></i>
+
+                <span>Settings</span>
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="../login.html"
+               onclick="logoutUser(event)">
+
+                <i class="fas fa-sign-out-alt"></i>
+
+                <span>Logout</span>
+
+            </a>
+
+        </li>
+
+    </ul>
+
+</div>
+
+
+
+<!-- ========================================
+     MAIN CONTENT
+     ======================================== -->
+
+<div class="main-content">
+
+
+    <!-- TOPBAR -->
+
+    <div class="topbar">
+
+        <h1>
+
+            Welcome,
+            <span id="userName">
+                Job Seeker
+            </span>
+
+        </h1>
+
+
+        <div class="profile">
+
+            <i class="fas fa-user-circle"></i>
+
+            <span id="profileName">
+                Job Seeker
+            </span>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ========================================
+         STATISTICS
+         ======================================== -->
+
+    <section class="cards">
+
+
+        <div class="card">
+
+            <i class="fas fa-briefcase"></i>
+
+            <h2 id="availableJobs">
+                0
+            </h2>
+
+            <p>
+                Available Jobs
+            </p>
+
+        </div>
+
+
+
+        <div class="card">
+
+            <i class="fas fa-file-alt"></i>
+
+            <h2 id="appliedJobs">
+                0
+            </h2>
+
+            <p>
+                Applied Jobs
+            </p>
+
+        </div>
+
+
+
+        <div class="card">
+
+            <i class="fas fa-bookmark"></i>
+
+            <h2 id="savedJobs">
+                0
+            </h2>
+
+            <p>
+                Saved Jobs
+            </p>
+
+        </div>
+
+
+
+        <div class="card">
+
+            <i class="fas fa-check-circle"></i>
+
+            <h2 id="selectedJobs">
+                0
+            </h2>
+
+            <p>
+                Selected Jobs
+            </p>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- ========================================
+         RECOMMENDED JOBS
+         ======================================== -->
+
+    <section class="table-section">
+
+
+        <h2>
+            Recommended Jobs
+        </h2>
+
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Job Title
+                    </th>
+
+                    <th>
+                        Company
+                    </th>
+
+                    <th>
+                        Location
+                    </th>
+
+                    <th>
+                        Action
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody id="recommendedJobs">
+
+                <!-- Jobs appear here -->
+
+            </tbody>
+
+        </table>
+
+
+    </section>
+
+
+</div>
+
+
+
+<!-- ========================================
+     JAVASCRIPT
+     ======================================== -->
+
+<script>
+
+
+// ========================================
+// GET LOGGED-IN USER
+// ========================================
+
+const loggedInUser =
+    JSON.parse(
+        localStorage.getItem("loggedInUser")
+    );
+
+
+// ========================================
+// CHECK LOGIN
+// ========================================
+
+if (!loggedInUser) {
+
+    window.location.href =
+        "../login.html";
+
+}
+
+
+// ========================================
+// CHECK JOB SEEKER ROLE
+// ========================================
+
+if (
+    loggedInUser &&
+    loggedInUser.role !== "jobseeker"
+) {
+
+    alert(
+        "Access denied. Job Seeker account required."
+    );
+
+    window.location.href =
+        "../login.html";
+
+}
+
+
+// ========================================
+// DISPLAY USER NAME
+// ========================================
+
+if (loggedInUser) {
+
+    document.getElementById("userName").textContent =
+        loggedInUser.name || "Job Seeker";
+
+    document.getElementById("profileName").textContent =
+        loggedInUser.name || "Job Seeker";
+
+}
+
+
+// ========================================
+// GET JOBS
+// ========================================
+
+const jobs =
+    JSON.parse(
+        localStorage.getItem("nepalJobs")
+    ) || [];
+
+
+// ========================================
+// GET APPLICATIONS
+// ========================================
+
+const applications =
+    JSON.parse(
+        localStorage.getItem("jobApplications")
+    ) || [];
+
+
+// ========================================
+// AVAILABLE JOBS
+// ========================================
+
+document.getElementById(
+    "availableJobs"
+).textContent =
+    jobs.length;
+
+
+// ========================================
+// GET MY APPLICATIONS
+// ========================================
+
+const myApplications =
+    loggedInUser
+        ? applications.filter(function(application) {
+
+            return (
+                application.applicantEmail &&
+                application.applicantEmail
+                    .toLowerCase() ===
+                loggedInUser.email.toLowerCase()
+            );
+
+        })
+        : [];
+
+
+// ========================================
+// APPLIED JOBS
+// ========================================
+
+document.getElementById(
+    "appliedJobs"
+).textContent =
+    myApplications.length;
+
+
+// ========================================
+// SELECTED JOBS
+// ========================================
+
+const selectedJobs =
+    myApplications.filter(function(application) {
+
+        return (
+            (application.status || "")
+                .toLowerCase() ===
+            "accepted"
+        );
+
+    });
+
+
+document.getElementById(
+    "selectedJobs"
+).textContent =
+    selectedJobs.length;
+
+
+// ========================================
+// SAVED JOBS
+// ========================================
+
+const savedJobs =
+    JSON.parse(
+        localStorage.getItem("savedJobs")
+    ) || [];
+
+
+document.getElementById(
+    "savedJobs"
+).textContent =
+    savedJobs.length;
+
+
+// ========================================
+// RECOMMENDED JOBS
+// ========================================
+
+const recommendedJobs =
+    document.getElementById(
+        "recommendedJobs"
+    );
+
+
+function displayRecommendedJobs() {
+
+
+    recommendedJobs.innerHTML = "";
+
+
+    if (jobs.length === 0) {
+
+        recommendedJobs.innerHTML = `
+
+            <tr>
+
+                <td colspan="4"
+                    style="text-align:center;">
+
+                    No jobs available right now.
+
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+
+    jobs
+        .slice(0, 5)
+        .forEach(function(job) {
+
+
+            const row =
+                document.createElement("tr");
+
+
+            row.innerHTML = `
+
+                <td>
+                    ${job.title || "Job Title"}
+                </td>
+
+                <td>
+                    ${job.company || "Company"}
+                </td>
+
+                <td>
+                    ${job.location || "Location"}
+                </td>
+
+                <td>
+
+                    <button
+                        class="edit-btn"
+                        onclick="viewJob(${job.id})">
+
+                        View
+
+                    </button>
+
+                </td>
+
+            `;
+
+
+            recommendedJobs.appendChild(row);
+
+        });
+
+}
+
+
+// ========================================
+// VIEW JOB
+// ========================================
+
+function viewJob(jobId) {
+
+
+    const selectedJob =
+        jobs.find(function(job) {
+
+            return String(job.id) ===
+                   String(jobId);
+
+        });
+
+
+    if (!selectedJob) {
+
+        return;
+
+    }
+
+
+    localStorage.setItem(
+        "selectedJob",
+        JSON.stringify(selectedJob)
+    );
+
+
+    window.location.href =
+        "jobs.html";
+
+}
+
+
+// ========================================
+// LOGOUT
+// ========================================
+
+function logoutUser(event) {
+
+    event.preventDefault();
+
+
+    localStorage.removeItem(
+        "loggedInUser"
+    );
+
+
+    window.location.href =
+        "../login.html";
+
+}
+
+
+// ========================================
+// LOAD
+// ========================================
+
+displayRecommendedJobs();
+
+
+</script>
+
+
+</body>
+
+</html>

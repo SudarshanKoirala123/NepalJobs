@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Manage Jobs - NepalJobs</title>
+
+    <link rel="stylesheet" href="employer.css">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+
+<body>
+
+
+<!-- ========================================
+     SIDEBAR
+     ======================================== -->
+
+<div class="sidebar">
+
+    <div class="logo">
+
+        <h2>NepalJobs</h2>
+
+    </div>
+
+
+    <ul class="menu">
+
+
+        <li>
+
+            <a href="dashboard.html">
+
+                <i class="fas fa-home"></i>
+
+                <span>Dashboard</span>
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="post-job.html">
+
+                <i class="fas fa-plus-circle"></i>
+
+                <span>Post a Job</span>
+
+            </a>
+
+        </li>
+
+
+        <li class="active">
+
+            <a href="manage-jobs.html">
+
+                <i class="fas fa-briefcase"></i>
+
+                <span>Manage Jobs</span>
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="applicants.html">
+
+                <i class="fas fa-users"></i>
+
+                <span>Applicants</span>
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="profile.html">
+
+                <i class="fas fa-user"></i>
+
+                <span>My Profile</span>
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="settings.html">
+
+                <i class="fas fa-cog"></i>
+
+                <span>Settings</span>
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="../login.html"
+               onclick="logoutUser(event)">
+
+                <i class="fas fa-sign-out-alt"></i>
+
+                <span>Logout</span>
+
+            </a>
+
+        </li>
+
+
+    </ul>
+
+</div>
+
+
+
+<!-- ========================================
+     MAIN CONTENT
+     ======================================== -->
+
+<div class="main-content">
+
+
+    <div class="topbar">
+
+        <h1>
+            Manage Jobs
+        </h1>
+
+
+        <div class="profile">
+
+            <i class="fas fa-user-circle"></i>
+
+            <span id="profileName">
+                Employer
+            </span>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ========================================
+         JOBS TABLE
+         ======================================== -->
+
+    <section class="table-section">
+
+
+        <h2>
+            My Posted Jobs
+        </h2>
+
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Job Title
+                    </th>
+
+                    <th>
+                        Company
+                    </th>
+
+                    <th>
+                        Location
+                    </th>
+
+                    <th>
+                        Salary
+                    </th>
+
+                    <th>
+                        Status
+                    </th>
+
+                    <th>
+                        Action
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody id="jobsTableBody">
+
+                <tr>
+
+                    <td colspan="6"
+                        style="text-align:center;">
+
+                        Loading jobs...
+
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+
+    </section>
+
+
+</div>
+
+
+
+<script>
+
+
+// ========================================
+// LOAD EMPLOYER NAME FROM PHP SESSION
+// ========================================
+
+fetch("../backend/session.php")
+
+.then(function(response) {
+
+    return response.json();
+
+})
+
+.then(function(data) {
+
+    if (!data.loggedIn) {
+
+        window.location.href = "../login.html";
+
+        return;
+
+    }
+
+
+    if (data.role !== "employer") {
+
+        alert("Employer account required.");
+
+        window.location.href = "../login.html";
+
+        return;
+
+    }
+
+
+    document.getElementById("profileName").textContent =
+        data.name || "Employer";
+
+
+    loadJobs();
+
+})
+
+.catch(function(error) {
+
+    console.error("Session error:", error);
+
+});
+
+
+
+// ========================================
+// LOAD JOBS FROM MYSQL
+// ========================================
+
+function loadJobs() {
+
+
+    fetch("../backend/get-my-jobs.php")
+
+    .then(function(response) {
+
+        return response.json();
+
+    })
+
+    .then(function(data) {
+
+
+        const jobsTableBody =
+            document.getElementById("jobsTableBody");
+
+
+        jobsTableBody.innerHTML = "";
+
+
+        if (!data.success) {
+
+            jobsTableBody.innerHTML = `
+
+                <tr>
+
+                    <td colspan="6"
+                        style="text-align:center;">
+
+                        ${data.message}
+
+                    </td>
+
+                </tr>
+
+            `;
+
+            return;
+
+        }
+
+
+        // ========================================
+        // NO MYSQL JOBS
+        // ========================================
+
+        if (data.jobs.length === 0) {
+
+            jobsTableBody.innerHTML = `
+
+                <tr>
+
+                    <td colspan="6"
+                        style="text-align:center;">
+
+                        You have not posted any jobs yet.
+
+                    </td>
+
+                </tr>
+
+            `;
+
+            return;
+
+        }
+
+
+        // ========================================
+        // DISPLAY MYSQL JOBS
+        // ========================================
+
+        data.jobs.forEach(function(job) {
+
+
+            const row =
+                document.createElement("tr");
+
+
+            row.innerHTML = `
+
+                <td>
+                    ${job.job_title}
+                </td>
+
+                <td>
+                    ${job.company}
+                </td>
+
+                <td>
+                    ${job.location}
+                </td>
+
+                <td>
+                    ${job.salary || "Not specified"}
+                </td>
+
+                <td>
+                    Active
+                </td>
+
+                <td>
+
+                    <button
+                        class="edit-btn"
+                        onclick="deleteJob(${job.id})">
+
+                        <i class="fas fa-trash"></i>
+
+                        Delete
+
+                    </button>
+
+                </td>
+
+            `;
+
+
+            jobsTableBody.appendChild(row);
+
+        });
+
+    })
+
+    .catch(function(error) {
+
+        console.error("Error loading jobs:", error);
+
+
+        document.getElementById("jobsTableBody").innerHTML = `
+
+            <tr>
+
+                <td colspan="6"
+                    style="text-align:center;">
+
+                    Failed to load jobs.
+
+                </td>
+
+            </tr>
+
+        `;
+
+    });
+
+}
+
+
+
+// ========================================
+// DELETE MYSQL JOB
+// ========================================
+
+function deleteJob(jobId) {
+
+
+    const confirmDelete =
+        confirm(
+            "Are you sure you want to delete this job?"
+        );
+
+
+    if (!confirmDelete) {
+
+        return;
+
+    }
+
+
+    const formData =
+        new FormData();
+
+
+    formData.append(
+        "job_id",
+        jobId
+    );
+
+
+    fetch("../backend/delete-job.php", {
+
+        method: "POST",
+
+        body: formData
+
+    })
+
+    .then(function(response) {
+
+        return response.json();
+
+    })
+
+    .then(function(data) {
+
+
+        if (data.success) {
+
+            alert(
+                "Job deleted successfully."
+            );
+
+
+            loadJobs();
+
+        } else {
+
+            alert(
+                data.message
+            );
+
+        }
+
+    })
+
+    .catch(function(error) {
+
+        console.error(
+            "Delete error:",
+            error
+        );
+
+        alert(
+            "Something went wrong while deleting the job."
+        );
+
+    });
+
+}
+
+
+
+// ========================================
+// LOGOUT
+// ========================================
+
+function logoutUser(event) {
+
+    event.preventDefault();
+
+
+    fetch("../backend/logout.php")
+
+    .then(function() {
+
+        window.location.href =
+            "../login.html";
+
+    })
+
+    .catch(function() {
+
+        window.location.href =
+            "../login.html";
+
+    });
+
+}
+
+
+</script>
+
+
+</body>
+
+</html>

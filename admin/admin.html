@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <!-- ==============================
+         ADMIN LOGIN CHECK
+    =============================== -->
+    <script>
+        if (localStorage.getItem("adminLoggedIn") !== "true") {
+            window.location.href = "admin-login.html";
+        }
+    </script>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard - NepalJobs</title>
+
+    <link rel="stylesheet" href="admin.css">
+
+</head>
+
+<body>
+
+<div class="admin-container">
+
+    <!-- ==============================
+         SIDEBAR
+    =============================== -->
+
+    <aside class="admin-sidebar">
+
+        <h2>NepalJobs</h2>
+
+        <p class="admin-title">
+            Admin Panel
+        </p>
+
+        <ul>
+
+            <li class="active">
+                <a href="admin.html">
+                    Dashboard
+                </a>
+            </li>
+
+            <li>
+                <a href="users.html">
+                    Manage Users
+                </a>
+            </li>
+
+            <li>
+                <a href="employers.html">
+                    Manage Employers
+                </a>
+            </li>
+
+            <li>
+                <a href="jobseekers.html">
+                    Manage Job Seekers
+                </a>
+            </li>
+
+            <li>
+                <a href="manage-jobs.html">
+                    Manage Jobs
+                </a>
+            </li>
+
+            <li>
+                <a href="applicants.html">
+                    Applications
+                </a>
+            </li>
+
+            <li>
+                <a href="settings.html">
+                    Settings
+                </a>
+            </li>
+
+            <li>
+                <a href="../index.html">
+                    Back to Website
+                </a>
+            </li>
+
+            <li>
+                <a href="#" onclick="adminLogout()">
+                    Logout
+                </a>
+            </li>
+
+        </ul>
+
+    </aside>
+
+
+    <!-- ==============================
+         MAIN CONTENT
+    =============================== -->
+
+    <main class="admin-main">
+
+        <!-- HEADER -->
+
+        <div class="admin-header">
+
+            <div>
+
+                <h1>
+                    Admin Dashboard
+                </h1>
+
+                <p>
+                    Welcome to NepalJobs Administration Panel
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- ==============================
+             DASHBOARD CARDS
+        =============================== -->
+
+        <div class="admin-cards">
+
+            <div class="admin-card">
+
+                <h3>
+                    Total Users
+                </h3>
+
+                <p id="totalUsers">
+                    0
+                </p>
+
+            </div>
+
+
+            <div class="admin-card">
+
+                <h3>
+                    Employers
+                </h3>
+
+                <p id="totalEmployers">
+                    0
+                </p>
+
+            </div>
+
+
+            <div class="admin-card">
+
+                <h3>
+                    Job Seekers
+                </h3>
+
+                <p id="totalJobSeekers">
+                    0
+                </p>
+
+            </div>
+
+
+            <div class="admin-card">
+
+                <h3>
+                    Total Jobs
+                </h3>
+
+                <p id="totalJobs">
+                    0
+                </p>
+
+            </div>
+
+
+            <div class="admin-card">
+
+                <h3>
+                    Total Applications
+                </h3>
+
+                <p id="totalApplications">
+                    0
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- ==============================
+             RECENT ACTIVITY
+        =============================== -->
+
+        <section class="admin-section">
+
+            <h2>
+                Recent Activity
+            </h2>
+
+            <p>
+                Admin activity and system information
+                will appear here.
+            </p>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- ==============================
+     ADMIN JAVASCRIPT
+=============================== -->
+
+<script src="admin.js"></script>
+
+
+<!-- ==============================
+     ADMIN LOGOUT
+=============================== -->
+
+<script>
+
+function adminLogout() {
+
+    localStorage.removeItem("adminLoggedIn");
+
+    window.location.href = "admin-login.html";
+
+}
+
+</script>
+
+</body>
+
+</html>

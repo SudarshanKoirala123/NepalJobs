@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employer Dashboard</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+        <div class="logo">
+            <h2>NepalJobs</h2>
+        </div>
+
+        <ul class="menu">
+
+            <li class="active">
+               <a href="dashboard.html">
+    <i class="fas fa-home"></i>
+    <span>Dashboard</span>
+</a>
+            </li>
+
+            <li>
+                <a href="post-job.html">
+                    <i class="fas fa-plus-circle"></i>
+                    <span>Post Job</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="manage-jobs.html">
+                    <i class="fas fa-briefcase"></i>
+                    <span>Manage Jobs</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="applicants.html">
+                    <i class="fas fa-users"></i>
+                    <span>Applicants</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="settings.html">
+                    <i class="fas fa-gear"></i>
+                   <span>Settings</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="../login.html">
+                    <i class="fas fa-right-from-bracket"></i>
+                    <span>Logout</span>
+                </a>
+            </li>
+
+        </ul>
+
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <!-- Top Bar -->
+        <header class="topbar">
+
+            <h1>Employer Dashboard</h1>
+
+            <div class="profile">
+
+                <i class="fas fa-user-circle"></i>
+
+                <span>Welcome, Admin</span>
+
+            </div>
+
+        </header>
+
+        <!-- Statistics -->
+        <section class="cards">
+
+            <div class="card">
+                <i class="fas fa-briefcase"></i>
+                <h2>18</h2>
+                <p>Total Jobs</p>
+            </div>
+
+            <div class="card">
+                <i class="fas fa-user-group"></i>
+                <h2>143</h2>
+                <p>Applicants</p>
+            </div>
+
+            <div class="card">
+                <i class="fas fa-circle-check"></i>
+                <h2>12</h2>
+                <p>Active Jobs</p>
+            </div>
+
+            <div class="card">
+                <i class="fas fa-clock"></i>
+                <h2>6</h2>
+                <p>Pending Reviews</p>
+            </div>
+
+        </section>
+
+        <!-- Recent Jobs -->
+        <section class="table-section">
+
+            <h2>Recent Job Posts</h2>
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Job Title</th>
+                        <th>Location</th>
+                        <th>Deadline</th>
+                        <th>Status</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr>
+                        <td>Frontend Developer</td>
+                        <td>Kathmandu</td>
+                        <td>15 Aug 2026</td>
+                        <td>Open</td>
+                    </tr>
+
+                    <tr>
+                        <td>UI/UX Designer</td>
+                        <td>Pokhara</td>
+                        <td>20 Aug 2026</td>
+                        <td>Open</td>
+                    </tr>
+
+                    <tr>
+                        <td>Backend Developer</td>
+                        <td>Lalitpur</td>
+                        <td>30 Aug 2026</td>
+                        <td>Closed</td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+    </main>
+
+</body>
+</html>

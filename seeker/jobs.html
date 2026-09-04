@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Find Jobs - NepalJobs</title>
+
+    <link rel="stylesheet" href="seeker.css">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+<body>
+
+
+<!-- ========================================
+     SIDEBAR
+     ======================================== -->
+
+<div class="sidebar">
+
+    <div class="logo">
+        <h2>NepalJobs</h2>
+    </div>
+
+    <ul class="menu">
+
+        <li>
+            <a href="dashboard.html">
+                <i class="fas fa-home"></i>
+                <span>Dashboard</span>
+            </a>
+        </li>
+
+        <li class="active">
+            <a href="jobs.html">
+                <i class="fas fa-search"></i>
+                <span>Find Jobs</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="application.html">
+                <i class="fas fa-file-alt"></i>
+                <span>My Applications</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="profile.html">
+                <i class="fas fa-user"></i>
+                <span>My Profile</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="settings.html">
+                <i class="fas fa-cog"></i>
+                <span>Settings</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="../login.html"
+               onclick="logoutUser(event)">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </a>
+        </li>
+
+    </ul>
+
+</div>
+
+
+<!-- ========================================
+     MAIN CONTENT
+     ======================================== -->
+
+<div class="main-content">
+
+
+    <div class="topbar">
+
+        <h1>Find Jobs</h1>
+
+        <div class="profile">
+
+            <i class="fas fa-user-circle"></i>
+
+            <span id="profileName">
+                Job Seeker
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================================
+         SEARCH
+         ======================================== -->
+
+    <section class="table-section">
+
+        <h2>Search Jobs</h2>
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search by job title, company or location..."
+        >
+
+    </section>
+
+
+    <!-- ========================================
+         JOB LIST
+         ======================================== -->
+
+    <section class="table-section"
+             style="margin-top:25px;">
+
+        <h2>Available Jobs</h2>
+
+        <div id="jobsContainer">
+
+            <!-- Jobs will appear here -->
+
+        </div>
+
+    </section>
+
+
+</div>
+
+
+<script>
+
+
+// ========================================
+// GET LOGGED-IN USER
+// ========================================
+
+const loggedInUser =
+    JSON.parse(
+        localStorage.getItem("loggedInUser")
+    );
+
+
+// ========================================
+// CHECK LOGIN
+// ========================================
+
+if (!loggedInUser) {
+
+    window.location.href =
+        "../login.html";
+
+}
+
+
+// ========================================
+// CHECK JOB SEEKER
+// ========================================
+
+if (
+    loggedInUser &&
+    loggedInUser.role !== "jobseeker"
+) {
+
+    alert(
+        "Access denied. Job Seeker account required."
+    );
+
+    window.location.href =
+        "../login.html";
+
+}
+
+
+// ========================================
+// DISPLAY USER NAME
+// ========================================
+
+if (loggedInUser) {
+
+    document.getElementById(
+        "profileName"
+    ).textContent =
+        loggedInUser.name || "Job Seeker";
+
+}
+
+
+// ========================================
+// GET JOBS
+// ========================================
+
+const jobs =
+    JSON.parse(
+        localStorage.getItem("nepalJobs")
+    ) || [];
+
+
+// ========================================
+// GET SAVED JOBS
+// ========================================
+
+let savedJobs =
+    JSON.parse(
+        localStorage.getItem("savedJobs")
+    ) || [];
+
+
+// ========================================
+// JOB CONTAINER
+// ========================================
+
+const jobsContainer =
+    document.getElementById(
+        "jobsContainer"
+    );
+
+
+// ========================================
+// DISPLAY JOBS
+// ========================================
+
+function displayJobs(jobList) {
+
+    jobsContainer.innerHTML = "";
+
+
+    if (jobList.length === 0) {
+
+        jobsContainer.innerHTML = `
+
+            <p style="text-align:center; padding:30px;">
+                No jobs found.
+            </p>
+
+        `;
+
+        return;
+
+    }
+
+
+    jobList.forEach(function(job, index) {
+
+
+        const jobBox =
+            document.createElement("div");
+
+
+        jobBox.style.border =
+            "1px solid #ddd";
+
+        jobBox.style.borderRadius =
+            "8px";
+
+        jobBox.style.padding =
+            "20px";
+
+        jobBox.style.marginBottom =
+            "15px";
+
+
+        const isSaved =
+            savedJobs.some(function(savedJob) {
+
+                return String(savedJob.id) ===
+                       String(job.id);
+
+            });
+
+
+        jobBox.innerHTML = `
+
+            <h3>
+                ${job.title || "Job Title"}
+            </h3>
+
+            <p>
+                <strong>Company:</strong>
+                ${job.company || "Company"}
+            </p>
+
+            <p>
+                <strong>Location:</strong>
+                ${job.location || "Location"}
+            </p>
+
+            <p>
+                <strong>Salary:</strong>
+                ${job.salary || "Not specified"}
+            </p>
+
+            <p>
+                ${job.description || "No description available."}
+            </p>
+
+            <div style="margin-top:15px;">
+
+                <button
+                    onclick="applyForJob(${index})">
+
+                    <i class="fas fa-paper-plane"></i>
+                    Apply
+
+                </button>
+
+
+                <button
+                    onclick="saveJob(${index})">
+
+                    <i class="fas fa-bookmark"></i>
+
+                    ${isSaved ? "Saved" : "Save"}
+
+                </button>
+
+            </div>
+
+        `;
+
+
+        jobsContainer.appendChild(jobBox);
+
+    });
+
+}
+
+
+// ========================================
+// APPLY FOR JOB
+// ========================================
+
+function applyForJob(index) {
+
+    const job =
+        jobs[index];
+
+
+    if (!job) {
+
+        return;
+
+    }
+
+
+    localStorage.setItem(
+        "selectedJob",
+        JSON.stringify(job)
+    );
+
+
+    window.location.href =
+        "application.html";
+
+}
+
+
+// ========================================
+// SAVE JOB
+// ========================================
+
+function saveJob(index) {
+
+    const job =
+        jobs[index];
+
+
+    if (!job) {
+
+        return;
+
+    }
+
+
+    const alreadySaved =
+        savedJobs.some(function(savedJob) {
+
+            return String(savedJob.id) ===
+                   String(job.id);
+
+        });
+
+
+    if (alreadySaved) {
+
+        alert(
+            "This job is already saved."
+        );
+
+        return;
+
+    }
+
+
+    savedJobs.push(job);
+
+
+    localStorage.setItem(
+        "savedJobs",
+        JSON.stringify(savedJobs)
+    );
+
+
+    alert(
+        "Job saved successfully."
+    );
+
+
+    displayJobs(
+        getFilteredJobs()
+    );
+
+}
+
+
+// ========================================
+// SEARCH
+// ========================================
+
+const searchInput =
+    document.getElementById(
+        "searchInput"
+    );
+
+
+function getFilteredJobs() {
+
+    const search =
+        searchInput.value
+            .trim()
+            .toLowerCase();
+
+
+    if (!search) {
+
+        return jobs;
+
+    }
+
+
+    return jobs.filter(function(job) {
+
+        return (
+
+            (job.title || "")
+                .toLowerCase()
+                .includes(search)
+
+            ||
+
+            (job.company || "")
+                .toLowerCase()
+                .includes(search)
+
+            ||
+
+            (job.location || "")
+                .toLowerCase()
+                .includes(search)
+
+        );
+
+    });
+
+}
+
+
+searchInput.addEventListener(
+    "input",
+    function() {
+
+        displayJobs(
+            getFilteredJobs()
+        );
+
+    }
+);
+
+
+// ========================================
+// LOGOUT
+// ========================================
+
+function logoutUser(event) {
+
+    event.preventDefault();
+
+    localStorage.removeItem(
+        "loggedInUser"
+    );
+
+    window.location.href =
+        "../login.html";
+
+}
+
+
+// ========================================
+// LOAD
+// ========================================
+
+displayJobs(jobs);
+
+
+</script>
+
+
+</body>
+
+</html>

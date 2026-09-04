@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Post a Job - NepalJobs</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div class="login-box">
+
+    <h1>
+        Post a Job
+    </h1>
+
+    <p>
+        Create a new job vacancy on NepalJobs
+    </p>
+
+
+    <form
+        class="job-form"
+        id="jobForm"
+        action="backend/post-job.php"
+        method="POST"
+    >
+
+        <!-- Company -->
+
+        <input
+            class="company"
+            id="company"
+            name="company"
+            type="text"
+            placeholder="Company Name"
+            required
+        >
+
+
+        <!-- Job Title -->
+
+        <input
+            class="job-title"
+            id="jobTitle"
+            name="title"
+            type="text"
+            placeholder="Job Title"
+            required
+        >
+
+
+        <!-- Location -->
+
+        <input
+            class="location"
+            id="location"
+            name="location"
+            type="text"
+            placeholder="Job Location"
+            required
+        >
+
+
+        <!-- Salary -->
+
+        <input
+            class="salary"
+            id="salary"
+            name="salary"
+            type="text"
+            placeholder="Salary Range"
+        >
+
+
+        <!-- Description -->
+
+        <textarea
+            class="description"
+            id="description"
+            name="description"
+            placeholder="Job Description"
+            required
+        ></textarea>
+
+
+        <!-- Submit -->
+
+        <button type="submit">
+            Post Job
+        </button>
+
+    </form>
+
+
+    <p style="margin-top:20px;">
+
+        <a href="index.html">
+            ⬅ Back to Home
+        </a>
+
+    </p>
+
+</div>
+
+</body>
+
+</html>

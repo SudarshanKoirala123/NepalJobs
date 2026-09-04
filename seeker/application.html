@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>My Applications - NepalJobs</title>
+
+    <link rel="stylesheet" href="seeker.css">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+<body>
+
+
+<!-- SIDEBAR -->
+
+<div class="sidebar">
+
+    <div class="logo">
+        <h2>NepalJobs</h2>
+    </div>
+
+    <ul class="menu">
+
+        <li>
+            <a href="dashboard.html">
+                <i class="fas fa-home"></i>
+                <span>Dashboard</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="jobs.html">
+                <i class="fas fa-search"></i>
+                <span>Find Jobs</span>
+            </a>
+        </li>
+
+        <li class="active">
+            <a href="application.html">
+                <i class="fas fa-file-alt"></i>
+                <span>My Applications</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="profile.html">
+                <i class="fas fa-user"></i>
+                <span>My Profile</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="settings.html">
+                <i class="fas fa-cog"></i>
+                <span>Settings</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="../login.html"
+               onclick="logoutUser(event)">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </a>
+        </li>
+
+    </ul>
+
+</div>
+
+
+<!-- MAIN CONTENT -->
+
+<div class="main-content">
+
+    <div class="topbar">
+
+        <h1>My Applications</h1>
+
+        <div class="profile">
+
+            <i class="fas fa-user-circle"></i>
+
+            <span id="profileName">
+                Job Seeker
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <section class="table-section">
+
+        <h2>Application Status</h2>
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>Job Title</th>
+                    <th>Company</th>
+                    <th>Applied Date</th>
+                    <th>Status</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="applicationsTableBody">
+
+            </tbody>
+
+        </table>
+
+    </section>
+
+</div>
+
+
+<script>
+
+
+// GET LOGGED-IN USER
+
+const loggedInUser =
+    JSON.parse(
+        localStorage.getItem("loggedInUser")
+    );
+
+
+// CHECK LOGIN
+
+if (!loggedInUser) {
+
+    window.location.href =
+        "../login.html";
+
+}
+
+
+// CHECK ROLE
+
+if (
+    loggedInUser &&
+    loggedInUser.role !== "jobseeker"
+) {
+
+    alert(
+        "Access denied. Job Seeker account required."
+    );
+
+    window.location.href =
+        "../login.html";
+
+}
+
+
+// DISPLAY NAME
+
+if (loggedInUser) {
+
+    document.getElementById(
+        "profileName"
+    ).textContent =
+        loggedInUser.name || "Job Seeker";
+
+}
+
+
+// GET APPLICATIONS
+
+const applications =
+    JSON.parse(
+        localStorage.getItem("jobApplications")
+    ) || [];
+
+
+// FILTER USER APPLICATIONS
+
+const myApplications =
+    applications.filter(function(application) {
+
+        return (
+            application.applicantEmail &&
+            application.applicantEmail
+                .toLowerCase() ===
+            loggedInUser.email.toLowerCase()
+        );
+
+    });
+
+
+// TABLE
+
+const tableBody =
+    document.getElementById(
+        "applicationsTableBody"
+    );
+
+
+// DISPLAY APPLICATIONS
+
+function displayApplications() {
+
+    tableBody.innerHTML = "";
+
+
+    if (myApplications.length === 0) {
+
+        tableBody.innerHTML = `
+
+            <tr>
+
+                <td colspan="4"
+                    style="text-align:center;">
+
+                    You have not applied for any jobs yet.
+
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+
+    myApplications.forEach(
+        function(application) {
+
+            const row =
+                document.createElement("tr");
+
+
+            row.innerHTML = `
+
+                <td>
+                    ${
+                        application.jobTitle ||
+                        application.title ||
+                        "Job"
+                    }
+                </td>
+
+                <td>
+                    ${
+                        application.company ||
+                        "Company"
+                    }
+                </td>
+
+                <td>
+                    ${
+                        application.appliedDate ||
+                        application.date ||
+                        "N/A"
+                    }
+                </td>
+
+                <td>
+                    ${
+                        application.status ||
+                        "Pending"
+                    }
+                </td>
+
+            `;
+
+
+            tableBody.appendChild(row);
+
+        }
+    );
+
+}
+
+
+// LOGOUT
+
+function logoutUser(event) {
+
+    event.preventDefault();
+
+    localStorage.removeItem(
+        "loggedInUser"
+    );
+
+    window.location.href =
+        "../login.html";
+
+}
+
+
+// LOAD
+
+displayApplications();
+
+
+</script>
+
+</body>
+
+</html>

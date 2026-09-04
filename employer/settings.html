@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Settings - NepalJobs</title>
+
+    <link rel="stylesheet" href="employer.css">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="sidebar">
+
+    <div class="logo">
+        <h2>NepalJobs</h2>
+    </div>
+
+    <ul class="menu">
+
+        <li>
+            <a href="dashboard.html">
+                <i class="fas fa-home"></i>
+                <span>Dashboard</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="post-job.html">
+                <i class="fas fa-plus-circle"></i>
+                <span>Post a Job</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="manage-jobs.html">
+                <i class="fas fa-briefcase"></i>
+                <span>Manage Jobs</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="applicants.html">
+                <i class="fas fa-users"></i>
+                <span>Applicants</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="profile.html">
+                <i class="fas fa-user"></i>
+                <span>My Profile</span>
+            </a>
+        </li>
+
+        <li class="active">
+            <a href="settings.html">
+                <i class="fas fa-cog"></i>
+                <span>Settings</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="../login.html" onclick="logoutUser(event)">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </a>
+        </li>
+
+    </ul>
+
+</div>
+
+
+<div class="main-content">
+
+    <div class="topbar">
+
+        <h1>Settings</h1>
+
+    </div>
+
+
+    <section class="table-section">
+
+        <h2>Account Settings</h2>
+
+        <form id="settingsForm">
+
+            <label>Email Notifications</label>
+
+            <select id="notifications">
+
+                <option value="on">
+                    Enabled
+                </option>
+
+                <option value="off">
+                    Disabled
+                </option>
+
+            </select>
+
+
+            <label>Account Status</label>
+
+            <select id="accountStatus">
+
+                <option value="active">
+                    Active
+                </option>
+
+                <option value="inactive">
+                    Inactive
+                </option>
+
+            </select>
+
+
+            <button type="submit">
+
+                <i class="fas fa-save"></i>
+
+                Save Settings
+
+            </button>
+
+        </form>
+
+    </section>
+
+</div>
+
+
+<script>
+
+const loggedInUser =
+    JSON.parse(
+        localStorage.getItem("loggedInUser")
+    );
+
+if (!loggedInUser) {
+
+    window.location.href =
+        "../login.html";
+
+}
+
+if (
+    loggedInUser &&
+    loggedInUser.role !== "employer"
+) {
+
+    window.location.href =
+        "../login.html";
+
+}
+
+
+const savedSettings =
+    JSON.parse(
+        localStorage.getItem(
+            "employerSettings"
+        )
+    ) || {};
+
+
+document.getElementById(
+    "notifications"
+).value =
+    savedSettings.notifications || "on";
+
+
+document.getElementById(
+    "accountStatus"
+).value =
+    savedSettings.accountStatus || "active";
+
+
+document.getElementById(
+    "settingsForm"
+).addEventListener(
+    "submit",
+    function(event) {
+
+        event.preventDefault();
+
+
+        const settings = {
+
+            notifications:
+                document.getElementById(
+                    "notifications"
+                ).value,
+
+            accountStatus:
+                document.getElementById(
+                    "accountStatus"
+                ).value
+
+        };
+
+
+        localStorage.setItem(
+            "employerSettings",
+            JSON.stringify(settings)
+        );
+
+
+        alert(
+            "Settings saved successfully."
+        );
+
+    }
+);
+
+
+function logoutUser(event) {
+
+    event.preventDefault();
+
+    localStorage.removeItem(
+        "loggedInUser"
+    );
+
+    window.location.href =
+        "../login.html";
+
+}
+
+</script>
+
+</body>
+
+</html>

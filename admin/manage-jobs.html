@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Jobs - NepalJobs</title>
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+<div class="sidebar">
+    <h2>NepalJobs</h2>
+    <p>Admin Panel</p>
+
+    <a href="admin.html">Dashboard</a>
+    <a href="manage-users.html">Manage Users</a>
+    <a href="manage-jobs.html" class="active">Manage Jobs</a>
+    <a href="applications.html">Applications</a>
+    <a href="../index.html">Back to Website</a>
+</div>
+
+<div class="main-content">
+    <h1>Manage Jobs</h1>
+
+    <div class="table-section">
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Company</th>
+                    <th>Job Title</th>
+                    <th>Location</th>
+                    <th>Salary</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody id="jobsTableBody"></tbody>
+        </table>
+    </div>
+</div>
+
+<script src="manage-jobs.js"></script>
+
+</body>
+</html>

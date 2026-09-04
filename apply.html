@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Apply for Job - NepalJobs</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+<div class="login-box">
+
+    <h1>Apply for Job</h1>
+
+    <p>Submit your application to NepalJobs</p>
+
+
+    <form class="apply-form" id="applyForm">
+
+
+        <input
+            class="applicant-name"
+            id="applicantName"
+            type="text"
+            placeholder="Full Name"
+            required
+        >
+
+
+        <input
+            class="applicant-email"
+            id="applicantEmail"
+            type="email"
+            placeholder="Email Address"
+            required
+        >
+
+
+        <input
+            class="applicant-phone"
+            id="applicantPhone"
+            type="text"
+            placeholder="Phone Number"
+            required
+        >
+
+
+        <textarea
+            class="applicant-message"
+            id="applicantMessage"
+            placeholder="Why should we hire you?"
+            required
+        ></textarea>
+
+
+        <button type="submit">
+
+            Submit Application
+
+        </button>
+
+
+    </form>
+
+
+    <p style="margin-top:20px;">
+
+        <a href="index.html">
+            ⬅ Back to Home
+        </a>
+
+    </p>
+
+
+</div>
+
+
+
+<script>
+
+
+// ========================================
+// GET LOGGED-IN USER
+// ========================================
+
+const loggedInUser =
+    JSON.parse(
+        localStorage.getItem("loggedInUser")
+    );
+
+
+// ========================================
+// GET SELECTED JOB
+// ========================================
+
+const selectedJob =
+    JSON.parse(
+        localStorage.getItem("selectedJob")
+    );
+
+
+
+// ========================================
+// CHECK LOGIN
+// ========================================
+
+if (!loggedInUser) {
+
+    alert("Please login before applying for a job.");
+
+    window.location.href = "login.html";
+
+}
+
+
+
+// ========================================
+// CHECK SELECTED JOB
+// ========================================
+
+if (!selectedJob) {
+
+    alert("Please select a job first.");
+
+    window.location.href = "jobseeker/jobs.html";
+
+}
+
+
+
+// ========================================
+// FILL USER INFORMATION
+// ========================================
+
+if (loggedInUser) {
+
+    document.getElementById("applicantName").value =
+        loggedInUser.name || "";
+
+
+    document.getElementById("applicantEmail").value =
+        loggedInUser.email || "";
+
+}
+
+
+
+// ========================================
+// SUBMIT APPLICATION
+// ========================================
+
+document
+    .getElementById("applyForm")
+    .addEventListener("submit", function(event) {
+
+
+        event.preventDefault();
+
+
+        // Get existing applications
+
+        let applications =
+            JSON.parse(
+                localStorage.getItem("jobApplications")
+            ) || [];
+
+
+
+        // ========================================
+        // CHECK DUPLICATE APPLICATION
+        // ========================================
+
+        const alreadyApplied =
+            applications.some(function(application) {
+
+                return (
+                    application.applicantEmail &&
+                    application.applicantEmail.toLowerCase() ===
+                    loggedInUser.email.toLowerCase() &&
+
+                    application.jobTitle ===
+                    selectedJob.title
+                );
+
+            });
+
+
+
+        if (alreadyApplied) {
+
+            alert(
+                "You have already applied for this job."
+            );
+
+            return;
+
+        }
+
+
+
+        // ========================================
+        // CREATE APPLICATION
+        // ========================================
+
+        const newApplication = {
+
+            applicantName:
+                document
+                    .getElementById("applicantName")
+                    .value
+                    .trim(),
+
+            applicantEmail:
+                document
+                    .getElementById("applicantEmail")
+                    .value
+                    .trim(),
+
+            applicantPhone:
+                document
+                    .getElementById("applicantPhone")
+                    .value
+                    .trim(),
+
+            message:
+                document
+                    .getElementById("applicantMessage")
+                    .value
+                    .trim(),
+
+            jobTitle:
+                selectedJob.title || "",
+
+            company:
+                selectedJob.company || "",
+
+            location:
+                selectedJob.location || "",
+
+            salary:
+                selectedJob.salary || "",
+
+            appliedDate:
+                new Date().toLocaleDateString(),
+
+            status:
+                "Pending"
+
+        };
+
+
+
+        // ========================================
+        // SAVE APPLICATION
+        // ========================================
+
+        applications.push(newApplication);
+
+
+        localStorage.setItem(
+            "jobApplications",
+            JSON.stringify(applications)
+        );
+
+
+
+        // ========================================
+        // SUCCESS
+        // ========================================
+
+        alert(
+            "Application submitted successfully!"
+        );
+
+
+
+        // Remove selected job
+
+        localStorage.removeItem("selectedJob");
+
+
+
+        // Go to My Applications
+
+        window.location.href =
+            "jobseeker/application.html";
+
+    });
+
+
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Employers - NepalJobs</title>
+    <link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+
+<div class="admin-container">
+
+    <aside class="admin-sidebar">
+
+        <h2>NepalJobs</h2>
+        <p class="admin-title">Admin Panel</p>
+
+        <ul>
+            <li><a href="admin.html">Dashboard</a></li>
+            <li><a href="users.html">Manage Users</a></li>
+            <li class="active"><a href="employers.html">Manage Employers</a></li>
+            <li><a href="jobseekers.html">Manage Job Seekers</a></li>
+            <li><a href="jobs.html">Manage Jobs</a></li>
+            <li><a href="applications.html">Applications</a></li>
+            <li><a href="settings.html">Settings</a></li>
+            <li><a href="../index.html">Back to Website</a></li>
+            <li><a href="../login.html">Logout</a></li>
+        </ul>
+
+    </aside>
+
+    <main class="admin-main">
+
+        <div class="admin-header">
+            <div>
+                <h1>Manage Employers</h1>
+                <p>View all registered employers.</p>
+            </div>
+        </div>
+
+        <section class="admin-section">
+
+            <h2>Registered Employers</h2>
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="employersTableBody"></tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script src="employers.js"></script>
+
+</body>
+</html>

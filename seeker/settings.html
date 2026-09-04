@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Settings - NepalJobs</title>
+
+    <link rel="stylesheet" href="seeker.css">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="sidebar">
+
+    <div class="logo">
+        <h2>NepalJobs</h2>
+    </div>
+
+    <ul class="menu">
+
+        <li>
+            <a href="dashboard.html">
+                <i class="fas fa-home"></i>
+                <span>Dashboard</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="jobs.html">
+                <i class="fas fa-search"></i>
+                <span>Find Jobs</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="application.html">
+                <i class="fas fa-file-alt"></i>
+                <span>My Applications</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="profile.html">
+                <i class="fas fa-user"></i>
+                <span>My Profile</span>
+            </a>
+        </li>
+
+        <li class="active">
+            <a href="settings.html">
+                <i class="fas fa-cog"></i>
+                <span>Settings</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="../login.html"
+               onclick="logoutUser(event)">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </a>
+        </li>
+
+    </ul>
+
+</div>
+
+
+<div class="main-content">
+
+    <div class="topbar">
+
+        <h1>Settings</h1>
+
+        <div class="profile">
+
+            <i class="fas fa-user-circle"></i>
+
+            <span id="profileName">
+                Job Seeker
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <section class="table-section">
+
+        <h2>Account Settings</h2>
+
+        <p style="margin:15px 0;">
+            Manage your NepalJobs account.
+        </p>
+
+
+        <button onclick="clearSavedJobs()">
+
+            <i class="fas fa-bookmark"></i>
+
+            Clear Saved Jobs
+
+        </button>
+
+
+        <button
+            onclick="logoutUser(event)"
+            style="margin-left:10px;">
+
+            <i class="fas fa-sign-out-alt"></i>
+
+            Logout
+
+        </button>
+
+    </section>
+
+</div>
+
+
+<script>
+
+const loggedInUser =
+    JSON.parse(
+        localStorage.getItem("loggedInUser")
+    );
+
+
+if (!loggedInUser) {
+
+    window.location.href =
+        "../login.html";
+
+}
+
+
+if (
+    loggedInUser &&
+    loggedInUser.role !== "jobseeker"
+) {
+
+    alert("Access denied.");
+
+    window.location.href =
+        "../login.html";
+
+}
+
+
+if (loggedInUser) {
+
+    document.getElementById(
+        "profileName"
+    ).textContent =
+        loggedInUser.name || "Job Seeker";
+
+}
+
+
+function clearSavedJobs() {
+
+    localStorage.removeItem(
+        "savedJobs"
+    );
+
+    alert(
+        "Saved jobs cleared successfully."
+    );
+
+}
+
+
+function logoutUser(event) {
+
+    if (event) {
+        event.preventDefault();
+    }
+
+    localStorage.removeItem(
+        "loggedInUser"
+    );
+
+    window.location.href =
+        "../login.html";
+
+}
+
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Applicants - NepalJobs</title>
+
+    <link rel="stylesheet" href="employer.css">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="sidebar">
+
+    <div class="logo">
+        <h2>NepalJobs</h2>
+    </div>
+
+    <ul class="menu">
+
+        <li>
+            <a href="dashboard.html">
+                <i class="fas fa-home"></i>
+                <span>Dashboard</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="post-job.html">
+                <i class="fas fa-plus-circle"></i>
+                <span>Post a Job</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="manage-jobs.html">
+                <i class="fas fa-briefcase"></i>
+                <span>Manage Jobs</span>
+            </a>
+        </li>
+
+        <li class="active">
+            <a href="applicants.html">
+                <i class="fas fa-users"></i>
+                <span>Applicants</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="profile.html">
+                <i class="fas fa-user"></i>
+                <span>My Profile</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="settings.html">
+                <i class="fas fa-cog"></i>
+                <span>Settings</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="../login.html" onclick="logoutUser(event)">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </a>
+        </li>
+
+    </ul>
+
+</div>
+
+
+<div class="main-content">
+
+    <div class="topbar">
+
+        <h1>Applicants</h1>
+
+        <div class="profile">
+
+            <i class="fas fa-user-circle"></i>
+
+            <span id="profileName">
+                Employer
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <section class="table-section">
+
+        <h2>Job Applications</h2>
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>Applicant</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Job</th>
+                    <th>Status</th>
+                    <th>Action</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="applicantsTableBody">
+
+            </tbody>
+
+        </table>
+
+    </section>
+
+</div>
+
+
+<script>
+
+// ========================================
+// GET LOGGED-IN USER
+// ========================================
+
+const loggedInUser =
+    JSON.parse(
+        localStorage.getItem("loggedInUser")
+    );
+
+
+// ========================================
+// CHECK LOGIN
+// ========================================
+
+if (!loggedInUser) {
+
+    window.location.href =
+        "../login.html";
+
+}
+
+
+// ========================================
+// CHECK EMPLOYER
+// ========================================
+
+if (
+    loggedInUser &&
+    loggedInUser.role !== "employer"
+) {
+
+    alert("Access denied.");
+
+    window.location.href =
+        "../login.html";
+
+}
+
+
+// ========================================
+// DISPLAY NAME
+// ========================================
+
+if (loggedInUser) {
+
+    document.getElementById("profileName").textContent =
+        loggedInUser.name || "Employer";
+
+}
+
+
+// ========================================
+// GET JOBS
+// ========================================
+
+const jobs =
+    JSON.parse(
+        localStorage.getItem("nepalJobs")
+    ) || [];
+
+
+// ========================================
+// GET APPLICATIONS
+// ========================================
+
+const applications =
+    JSON.parse(
+        localStorage.getItem("jobApplications")
+    ) || [];
+
+
+// ========================================
+// GET EMPLOYER JOBS
+// ========================================
+
+const employerEmail =
+    loggedInUser.email.toLowerCase();
+
+
+const employerJobs =
+    jobs.filter(function(job) {
+
+        return (
+            job.employerEmail &&
+            job.employerEmail.toLowerCase() ===
+            employerEmail
+        );
+
+    });
+
+
+// ========================================
+// GET EMPLOYER JOB TITLES
+// ========================================
+
+const employerJobTitles =
+    employerJobs.map(function(job) {
+
+        return (job.title || "").toLowerCase();
+
+    });
+
+
+// ========================================
+// FILTER APPLICATIONS
+// ========================================
+
+const employerApplications =
+    applications.filter(function(application) {
+
+        const jobTitle =
+            (
+                application.jobTitle ||
+                application.title ||
+                ""
+            ).toLowerCase();
+
+        return employerJobTitles.includes(jobTitle);
+
+    });
+
+
+// ========================================
+// TABLE
+// ========================================
+
+const tableBody =
+    document.getElementById(
+        "applicantsTableBody"
+    );
+
+
+// ========================================
+// DISPLAY APPLICATIONS
+// ========================================
+
+function displayApplicants() {
+
+    tableBody.innerHTML = "";
+
+
+    if (employerApplications.length === 0) {
+
+        tableBody.innerHTML = `
+
+            <tr>
+
+                <td colspan="6"
+                    style="text-align:center;">
+
+                    No applications found.
+
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+
+    employerApplications.forEach(
+        function(application) {
+
+            const row =
+                document.createElement("tr");
+
+
+            row.innerHTML = `
+
+                <td>
+                    ${application.applicantName || "Unknown"}
+                </td>
+
+                <td>
+                    ${application.applicantEmail || "N/A"}
+                </td>
+
+                <td>
+                    ${application.applicantPhone || "N/A"}
+                </td>
+
+                <td>
+                    ${application.jobTitle || "Job"}
+                </td>
+
+                <td>
+                    ${application.status || "Pending"}
+                </td>
+
+                <td>
+
+                    <button
+                        onclick="updateStatus(
+                            '${application.id}',
+                            'accepted'
+                        )">
+
+                        Accept
+
+                    </button>
+
+                    <button
+                        onclick="updateStatus(
+                            '${application.id}',
+                            'rejected'
+                        )">
+
+                        Reject
+
+                    </button>
+
+                </td>
+
+            `;
+
+
+            tableBody.appendChild(row);
+
+        }
+    );
+
+}
+
+
+// ========================================
+// UPDATE APPLICATION STATUS
+// ========================================
+
+function updateStatus(
+    applicationId,
+    newStatus
+) {
+
+    const updatedApplications =
+        applications.map(function(application) {
+
+            if (
+                String(application.id) ===
+                String(applicationId)
+            ) {
+
+                application.status =
+                    newStatus;
+
+            }
+
+            return application;
+
+        });
+
+
+    localStorage.setItem(
+        "jobApplications",
+        JSON.stringify(updatedApplications)
+    );
+
+
+    alert(
+        "Application status updated."
+    );
+
+
+    window.location.reload();
+
+}
+
+
+// ========================================
+// LOGOUT
+// ========================================
+
+function logoutUser(event) {
+
+    event.preventDefault();
+
+    localStorage.removeItem(
+        "loggedInUser"
+    );
+
+    window.location.href =
+        "../login.html";
+
+}
+
+
+// ========================================
+// LOAD
+// ========================================
+
+displayApplicants();
+
+</script>
+
+</body>
+
+</html>

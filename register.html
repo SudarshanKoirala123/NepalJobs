@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Create Account - NepalJobs</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div class="login-box">
+
+    <h1>
+        Create Account
+    </h1>
+
+    <p>
+        Join NepalJobs today
+    </p>
+
+
+    <!-- ================= REGISTER FORM ================= -->
+
+    <form
+        class="register-form"
+        id="registerForm"
+        action="backend/register.php"
+        method="POST"
+    >
+
+        <!-- Full Name -->
+
+        <input
+            class="name"
+            type="text"
+            id="registerName"
+            name="name"
+            placeholder="Full Name"
+            required
+        >
+
+
+        <!-- Email -->
+
+        <input
+            class="email"
+            type="email"
+            id="registerEmail"
+            name="email"
+            placeholder="Email Address"
+            required
+        >
+
+
+        <!-- Password -->
+
+        <input
+            class="password"
+            type="password"
+            id="registerPassword"
+            name="password"
+            placeholder="Password"
+            required
+        >
+
+
+        <!-- Account Type -->
+
+        <select
+            id="registerRole"
+            name="role"
+            required
+        >
+
+            <option value="">
+                Select Account Type
+            </option>
+
+            <option value="employer">
+                Employer / Job Provider
+            </option>
+
+            <option value="jobseeker">
+                Job Seeker
+            </option>
+
+        </select>
+
+
+        <!-- Register Button -->
+
+        <button type="submit">
+
+            Create Account
+
+        </button>
+
+    </form>
+
+
+    <!-- ================= LOGIN LINK ================= -->
+
+    <p class="register-link">
+
+        Already have an account?
+
+        <a href="login.html">
+            Login Now
+        </a>
+
+    </p>
+
+
+    <!-- ================= HOME LINK ================= -->
+
+    <p style="margin-top:20px;">
+
+        <a href="index.html">
+            ⬅ Back to Home
+        </a>
+
+    </p>
+
+</div>
+
+</body>
+
+</html>
