@@ -1,304 +1,192 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>Apply for Job - NepalJobs</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="apply.css" />
+  </head>
 
-</head>
+  <body>
+    <div class="login-box">
+      <h1>Apply for Job</h1>
 
+      <p>Submit your application to NepalJobs</p>
 
-<body>
-
-
-<div class="login-box">
-
-    <h1>Apply for Job</h1>
-
-    <p>Submit your application to NepalJobs</p>
-
-
-    <form class="apply-form" id="applyForm">
-
+      <form class="apply-form" id="applyForm">
+        <input
+          class="applicant-name"
+          id="applicantName"
+          type="text"
+          placeholder="Full Name"
+          required
+        />
 
         <input
-            class="applicant-name"
-            id="applicantName"
-            type="text"
-            placeholder="Full Name"
-            required
-        >
-
-
-        <input
-            class="applicant-email"
-            id="applicantEmail"
-            type="email"
-            placeholder="Email Address"
-            required
-        >
-
+          class="applicant-email"
+          id="applicantEmail"
+          type="email"
+          placeholder="Email Address"
+          required
+        />
 
         <input
-            class="applicant-phone"
-            id="applicantPhone"
-            type="text"
-            placeholder="Phone Number"
-            required
-        >
-
+          class="applicant-phone"
+          id="applicantPhone"
+          type="text"
+          placeholder="Phone Number"
+          required
+        />
 
         <textarea
-            class="applicant-message"
-            id="applicantMessage"
-            placeholder="Why should we hire you?"
-            required
+          class="applicant-message"
+          id="applicantMessage"
+          placeholder="Why should we hire you?"
+          required
         ></textarea>
 
+        <button type="submit">Submit Application</button>
+      </form>
 
-        <button type="submit">
+      <p style="margin-top: 20px">
+        <a href="index.html"> ⬅ Back to Home </a>
+      </p>
+    </div>
 
-            Submit Application
+    <script>
+      // ========================================
+      // GET LOGGED-IN USER
+      // ========================================
 
-        </button>
+      const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
 
+      // ========================================
+      // GET SELECTED JOB
+      // ========================================
 
-    </form>
+      const selectedJob = JSON.parse(localStorage.getItem("selectedJob"));
 
+      // ========================================
+      // CHECK LOGIN
+      // ========================================
 
-    <p style="margin-top:20px;">
+      if (!loggedInUser) {
+        alert("Please login before applying for a job.");
 
-        <a href="index.html">
-            ⬅ Back to Home
-        </a>
+        window.location.href = "login.html";
+      }
 
-    </p>
+      // ========================================
+      // CHECK SELECTED JOB
+      // ========================================
 
+      if (!selectedJob) {
+        alert("Please select a job first.");
 
-</div>
+        window.location.href = "jobseeker/jobs.html";
+      }
 
+      // ========================================
+      // FILL USER INFORMATION
+      // ========================================
 
+      if (loggedInUser) {
+        document.getElementById("applicantName").value =
+          loggedInUser.name || "";
 
-<script>
+        document.getElementById("applicantEmail").value =
+          loggedInUser.email || "";
+      }
 
+      // ========================================
+      // SUBMIT APPLICATION
+      // ========================================
 
-// ========================================
-// GET LOGGED-IN USER
-// ========================================
+      document
+        .getElementById("applyForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
 
-const loggedInUser =
-    JSON.parse(
-        localStorage.getItem("loggedInUser")
-    );
+          // Get existing applications
 
+          let applications =
+            JSON.parse(localStorage.getItem("jobApplications")) || [];
 
-// ========================================
-// GET SELECTED JOB
-// ========================================
+          // ========================================
+          // CHECK DUPLICATE APPLICATION
+          // ========================================
 
-const selectedJob =
-    JSON.parse(
-        localStorage.getItem("selectedJob")
-    );
-
-
-
-// ========================================
-// CHECK LOGIN
-// ========================================
-
-if (!loggedInUser) {
-
-    alert("Please login before applying for a job.");
-
-    window.location.href = "login.html";
-
-}
-
-
-
-// ========================================
-// CHECK SELECTED JOB
-// ========================================
-
-if (!selectedJob) {
-
-    alert("Please select a job first.");
-
-    window.location.href = "jobseeker/jobs.html";
-
-}
-
-
-
-// ========================================
-// FILL USER INFORMATION
-// ========================================
-
-if (loggedInUser) {
-
-    document.getElementById("applicantName").value =
-        loggedInUser.name || "";
-
-
-    document.getElementById("applicantEmail").value =
-        loggedInUser.email || "";
-
-}
-
-
-
-// ========================================
-// SUBMIT APPLICATION
-// ========================================
-
-document
-    .getElementById("applyForm")
-    .addEventListener("submit", function(event) {
-
-
-        event.preventDefault();
-
-
-        // Get existing applications
-
-        let applications =
-            JSON.parse(
-                localStorage.getItem("jobApplications")
-            ) || [];
-
-
-
-        // ========================================
-        // CHECK DUPLICATE APPLICATION
-        // ========================================
-
-        const alreadyApplied =
-            applications.some(function(application) {
-
-                return (
-                    application.applicantEmail &&
-                    application.applicantEmail.toLowerCase() ===
-                    loggedInUser.email.toLowerCase() &&
-
-                    application.jobTitle ===
-                    selectedJob.title
-                );
-
-            });
-
-
-
-        if (alreadyApplied) {
-
-            alert(
-                "You have already applied for this job."
+          const alreadyApplied = applications.some(function (application) {
+            return (
+              application.applicantEmail &&
+              application.applicantEmail.toLowerCase() ===
+                loggedInUser.email.toLowerCase() &&
+              application.jobTitle === selectedJob.title
             );
+          });
+
+          if (alreadyApplied) {
+            alert("You have already applied for this job.");
 
             return;
+          }
 
-        }
+          // ========================================
+          // CREATE APPLICATION
+          // ========================================
 
+          const newApplication = {
+            applicantName: document
+              .getElementById("applicantName")
+              .value.trim(),
 
+            applicantEmail: document
+              .getElementById("applicantEmail")
+              .value.trim(),
 
-        // ========================================
-        // CREATE APPLICATION
-        // ========================================
+            applicantPhone: document
+              .getElementById("applicantPhone")
+              .value.trim(),
 
-        const newApplication = {
+            message: document.getElementById("applicantMessage").value.trim(),
 
-            applicantName:
-                document
-                    .getElementById("applicantName")
-                    .value
-                    .trim(),
+            jobTitle: selectedJob.title || "",
 
-            applicantEmail:
-                document
-                    .getElementById("applicantEmail")
-                    .value
-                    .trim(),
+            company: selectedJob.company || "",
 
-            applicantPhone:
-                document
-                    .getElementById("applicantPhone")
-                    .value
-                    .trim(),
+            location: selectedJob.location || "",
 
-            message:
-                document
-                    .getElementById("applicantMessage")
-                    .value
-                    .trim(),
+            salary: selectedJob.salary || "",
 
-            jobTitle:
-                selectedJob.title || "",
+            appliedDate: new Date().toLocaleDateString(),
 
-            company:
-                selectedJob.company || "",
+            status: "Pending",
+          };
 
-            location:
-                selectedJob.location || "",
+          // ========================================
+          // SAVE APPLICATION
+          // ========================================
 
-            salary:
-                selectedJob.salary || "",
+          applications.push(newApplication);
 
-            appliedDate:
-                new Date().toLocaleDateString(),
+          localStorage.setItem("jobApplications", JSON.stringify(applications));
 
-            status:
-                "Pending"
+          // ========================================
+          // SUCCESS
+          // ========================================
 
-        };
+          alert("Application submitted successfully!");
 
+          // Remove selected job
 
+          localStorage.removeItem("selectedJob");
 
-        // ========================================
-        // SAVE APPLICATION
-        // ========================================
+          // Go to My Applications
 
-        applications.push(newApplication);
-
-
-        localStorage.setItem(
-            "jobApplications",
-            JSON.stringify(applications)
-        );
-
-
-
-        // ========================================
-        // SUCCESS
-        // ========================================
-
-        alert(
-            "Application submitted successfully!"
-        );
-
-
-
-        // Remove selected job
-
-        localStorage.removeItem("selectedJob");
-
-
-
-        // Go to My Applications
-
-        window.location.href =
-            "jobseeker/application.html";
-
-    });
-
-
-</script>
-
-
-</body>
-
+          window.location.href = "jobseeker/application.html";
+        });
+    </script>
+  </body>
 </html>
