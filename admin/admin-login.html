@@ -6,16 +6,13 @@
 
     <title>Admin Login - NepalJobs</title>
 
-<<<<<<< HEAD
-=======
-
->>>>>>> be5fed636feb0fae7cfa4a6972fe711c979649a8
     <link rel="stylesheet" href="admin.css" />
   </head>
 
   <body>
     <div class="admin-login-container">
       <div class="admin-login-box">
+
         <div class="admin-login-icon">
           <i class="fas fa-user-shield"></i>
         </div>
@@ -24,13 +21,17 @@
 
         <p>Login to access NepalJobs Admin Panel</p>
 
-        <form id="adminLoginForm">
+        <form action="../backend/admin-login.php" method="POST">
+
           <div class="input-group">
-            <label for="adminId"> <i class="fas fa-user"></i> Admin ID </label>
+            <label for="adminId">
+              <i class="fas fa-user"></i> Admin ID
+            </label>
 
             <input
               type="text"
               id="adminId"
+              name="admin_id"
               placeholder="Enter Admin ID"
               required
             />
@@ -44,26 +45,26 @@
             <input
               type="password"
               id="adminPassword"
+              name="admin_password"
               placeholder="Enter Password"
               required
             />
           </div>
 
-          <p id="adminLoginError"></p>
-
           <button type="submit">
             <i class="fas fa-sign-in-alt"></i>
             Login as Admin
           </button>
+
         </form>
 
         <a href="../index.html" class="back-home">
           <i class="fas fa-arrow-left"></i>
           Back to Website
         </a>
+
       </div>
     </div>
-
-    <script src="admin-login.js"></script>
   </body>
 </html>
+

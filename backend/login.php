@@ -66,17 +66,17 @@ $conn->close();
 // Redirect based on role
 if ($user["role"] === "jobseeker") {
 
-    header("Location: ../seeker/dashboard.html");
+    header("Location: ../seeker/dashboard.php");
     exit;
 
 } elseif ($user["role"] === "employer") {
 
-    header("Location: ../employer/dashboard.html");
+    header("Location: ../employer/dashboard.php");
     exit;
 
 } elseif ($user["role"] === "admin") {
 
-    header("Location: ../admin/admin.html");
+    header("Location: ../admin/admin.php");
     exit;
 
 } else {
