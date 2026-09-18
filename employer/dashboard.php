@@ -251,7 +251,7 @@ $conn->close();
 
         <h1>
 
-            Welcome,
+            Welcome Employer
             <?php echo htmlspecialchars($_SESSION["name"]); ?>
 
         </h1>

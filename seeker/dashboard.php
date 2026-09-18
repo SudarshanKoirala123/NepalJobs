@@ -182,7 +182,7 @@ $conn->close();
 
         <h1>
 
-            Welcome,
+            Welcome Job Seeker
             <?php echo htmlspecialchars($_SESSION["name"]); ?>
 
         </h1>
