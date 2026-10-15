@@ -1,3 +1,4 @@
+```php
 <?php
 
 session_start();
@@ -13,7 +14,6 @@ if (!isset($_SESSION["user_id"])) {
     exit;
 }
 
-
 // ========================================
 // ONLY JOB SEEKERS
 // ========================================
@@ -22,7 +22,6 @@ if ($_SESSION["role"] !== "jobseeker") {
     header("Location: ../login.html");
     exit;
 }
-
 
 // ========================================
 // GET JOBS FROM DATABASE
@@ -47,9 +46,7 @@ $jobs = [];
 if ($result) {
 
     while ($row = $result->fetch_assoc()) {
-
         $jobs[] = $row;
-
     }
 
 }
@@ -74,7 +71,6 @@ if ($result) {
 
 <body>
 
-
 <!-- ========================================
      SIDEBAR
 ======================================== -->
@@ -82,80 +78,46 @@ if ($result) {
 <div class="sidebar">
 
     <div class="logo">
-
         <h2>NepalJobs</h2>
-
     </div>
-
 
     <ul class="menu">
 
-
         <li>
-
             <a href="dashboard.php">
-
                 <span>Dashboard</span>
-
             </a>
-
         </li>
-
 
         <li class="active">
-
             <a href="jobs.php">
-
                 <span>Find Jobs</span>
-
             </a>
-
         </li>
 
-
         <li>
-
             <a href="application.php">
-
                 <span>My Applications</span>
-
             </a>
-
         </li>
 
-
         <li>
-
             <a href="profile.php">
-
                 <span>My Profile</span>
-
             </a>
-
         </li>
 
-
         <li>
-
             <a href="settings.php">
-
                 <span>Settings</span>
-
             </a>
-
         </li>
-
 
         <li>
-
             <a href="logout.php">
-
                 <span>Logout</span>
-
             </a>
-
         </li>
-
 
     </ul>
 
@@ -168,7 +130,6 @@ if ($result) {
 
 <div class="main-content">
 
-
     <!-- TOPBAR -->
 
     <div class="topbar">
@@ -177,21 +138,17 @@ if ($result) {
             Find Jobs
         </h1>
 
-
         <div class="profile">
 
             <span>
-
                 <?php
                 echo htmlspecialchars($_SESSION["name"]);
                 ?>
-
             </span>
 
         </div>
 
     </div>
-
 
 
     <!-- ========================================
@@ -204,7 +161,6 @@ if ($result) {
             Search Jobs
         </h2>
 
-
         <input
             type="text"
             id="searchInput"
@@ -212,7 +168,6 @@ if ($result) {
         >
 
     </section>
-
 
 
     <!-- ========================================
@@ -228,25 +183,17 @@ if ($result) {
             Available Jobs
         </h2>
 
-
         <div id="jobsContainer">
-
 
             <?php if (count($jobs) === 0): ?>
 
-
                 <p style="text-align:center; padding:30px;">
-
                     No jobs are currently available.
-
                 </p>
-
 
             <?php else: ?>
 
-
                 <?php foreach ($jobs as $job): ?>
-
 
                     <div
                         class="job-box"
@@ -261,13 +208,10 @@ if ($result) {
                         "
                     >
 
-
                         <h3>
-
                             <?php
                             echo htmlspecialchars($job["job_title"]);
                             ?>
-
                         </h3>
 
 
@@ -327,39 +271,40 @@ if ($result) {
                         </p>
 
 
-                        <!-- APPLY BUTTON -->
+                        <!-- ========================================
+                             APPLY BUTTON
+                        ======================================== -->
 
                         <div style="margin-top:15px;">
 
                             <a
-                                href="application.php?job_id=<?php echo (int)$job["id"]; ?>"
+                                href="application.php?job_id=<?php echo (int)$job['id']; ?>"
+                                style="
+                                    display:inline-block;
+                                    padding:10px 20px;
+                                    background:#2563eb;
+                                    color:white;
+                                    text-decoration:none;
+                                    border-radius:6px;
+                                    cursor:pointer;
+                                "
                             >
-
-                                <button type="button">
-                                    Apply
-                                </button>
-
+                                Apply
                             </a>
 
                         </div>
 
-
                     </div>
-
 
                 <?php endforeach; ?>
 
-
             <?php endif; ?>
-
 
         </div>
 
     </section>
 
-
 </div>
-
 
 
 <!-- ========================================
@@ -372,18 +317,15 @@ const searchInput = document.getElementById("searchInput");
 
 const jobBoxes = document.querySelectorAll(".job-box");
 
-
 searchInput.addEventListener("input", function () {
 
     const search = this.value.trim().toLowerCase();
-
 
     jobBoxes.forEach(function (job) {
 
         const title = job.dataset.title;
         const company = job.dataset.company;
         const location = job.dataset.location;
-
 
         if (
             title.includes(search) ||
@@ -405,7 +347,9 @@ searchInput.addEventListener("input", function () {
 
 </script>
 
-
 </body>
 
 </html>
+
+
+
